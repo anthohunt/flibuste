@@ -1,0 +1,26 @@
+{
+  "command": "sliders",
+  "weights": "weights/champion.json",
+  "games": 120,
+  "seed": "judge-final",
+  "rounds": 6,
+  "workers": 30,
+  "malice": {
+    "ok": true,
+    "victimScoreVsMalice10": 72.46,
+    "victimScoreVsMalice0": 81.17,
+    "botScoreMalice10": 108,
+    "botScoreMalice0": 115.67,
+    "zeroBidsFailedVsMalice10": 122,
+    "zeroBidsVsMalice10": 621,
+    "zeroBidsFailedVsMalice0": 103,
+    "zeroBidsVsMalice0": 621
+  },
+  "force": {
+    "ok": true,
+    "meanForce2": 78.67,
+    "meanForce10": 114.63,
+    "shareForce10": 0.6233
+  },
+  "ms": 25747
+}

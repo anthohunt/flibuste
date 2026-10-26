@@ -1,0 +1,3 @@
+# règles par défaut ; rien à autoriser.
+[extend]
+useDefault = true

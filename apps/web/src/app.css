@@ -1,0 +1,1785 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------------------------------------
+   Roi des Flibustiers — thème « taverne » (v3).
+   Matières : bois poli riveté, laiton, or gravé, parchemin, feutre de table, lueur de lanterne.
+   Polices auto-hébergées (public/fonts, précachées) : Pirata One (titres, enseignes, boutons),
+   Alegreya (texte, indications). Tout est hors-ligne, aucune feuille distante.
+   ------------------------------------------------------------------------------------------------ */
+
+@font-face {
+  font-family: 'Pirata One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/pirata-one.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/alegreya.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Alegreya';
+  font-style: italic;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/alegreya-italic.woff2') format('woff2');
+}
+
+@theme {
+  /* Bois */
+  --color-wood-950: #120903;
+  --color-wood-900: #1d1108;
+  --color-wood-800: #2c1a0c;
+  --color-wood-700: #3f2612;
+  --color-wood-600: #5a3619;
+  --color-wood-500: #7a4c22;
+  /* Laiton / or */
+  --color-brass-600: #8f6a22;
+  --color-brass-500: #b5852f;
+  --color-brass-400: #d0a24a;
+  --color-brass-300: #e6c36a;
+  --color-gold-500: #d9a83a;
+  --color-gold-400: #ecc558;
+  --color-gold-300: #f4d67a;
+  --color-gold-100: #fbeec2;
+  /* Parchemin / encre */
+  --color-parchment: #f3e6c8;
+  --color-parchment-300: #e5d2a6;
+  --color-parchment-500: #c9ad7a;
+  --color-ink-900: #2a1a0d;
+  --color-ink-700: #4a3220;
+  --color-ink-500: #6b4d33;
+  /* Encre atténuée : le plus clair qui passe encore 4,5:1 sur le parchemin (texte secondaire, indications). */
+  --color-ink-muted: #5a4028;
+  /* Parchemin atténué : texte secondaire sur le bois sombre, ≥ 4,5:1 sur les planches et le laiton terni. */
+  --color-parchment-muted: #d9c7a0;
+  /* Braise (lanterne, alertes), rhum (danger), feutre (table) */
+  --color-ember-500: #e0662a;
+  --color-ember-300: #ffa04a;
+  --color-rum-600: #8b1e2b;
+  --color-rum-500: #b3283a;
+  /* Rouge lisible sur le bois sombre (plis dépassés) : ≥ 4,5:1 sur les plaques. */
+  --color-rum-300: #f4949c;
+  --color-felt-800: #0e2f1f;
+  --color-felt-700: #14402a;
+  /* Alias hérités (composants non retouchés) : le bleu marine d'avant devient du bois sombre. */
+  --color-navy-950: #120903;
+  --color-navy-900: #1d1108;
+  --color-navy-800: #2c1a0c;
+  --color-navy-700: #3f2612;
+  --color-navy-600: #6b4a24;
+  /* Couleurs des cartes (inchangées) */
+  --color-suit-parrot: #22c55e;
+  --color-suit-map: #a855f7;
+  --color-suit-chest: #eab308;
+  --color-suit-roger: #0a0a0a;
+  --font-display: 'Pirata One', 'Georgia', serif;
+  --font-body: 'Alegreya', 'Georgia', 'Times New Roman', serif;
+  --font-sans: 'Alegreya', 'Georgia', serif;
+}
+
+:root {
+  color-scheme: dark;
+  background: var(--color-wood-900);
+  /* Textures (public/ui, précachées) */
+  --tex-wood: url('/ui/wood-plank.webp');
+  --tex-parchment: url('/ui/parchment.webp');
+  --tex-felt: url('/ui/felt-table.webp');
+  --tex-tavern: url('/ui/tavern-bg.webp');
+  --tex-sign: url('/ui/sign-board.webp');
+  /* Dégradés partagés */
+  /* Laiton : la bande sombre du milieu est éclaircie (#9a7226 → #b08434) pour que l'encre passe 4,5:1 partout (E5). */
+  --brass-grad: linear-gradient(180deg, #f3dc95 0%, #d1a44a 38%, #b08434 55%, #c99b45 78%, #e9cd7e 100%);
+  --brass-dark-grad: linear-gradient(180deg, #6a5432 0%, #4a3820 50%, #3a2a16 100%);
+  --gold-text-grad: linear-gradient(180deg, #fff2c4 0%, #f1c95a 45%, #b7862a 60%, #f6d97e 100%);
+  --rivet: radial-gradient(circle at 40% 35%, #fbe7a8 0, #d3a94a 28%, #7a5320 62%, #2a1a08 80%, transparent 82%);
+  /* Ombres portées « gravé dans le bois » */
+  --emboss: 0 1px 0 rgba(255, 236, 190, 0.22), 0 -1px 0 rgba(0, 0, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.65);
+  --emboss-soft: 0 1px 0 rgba(0, 0, 0, 0.75), 0 0 8px rgba(255, 190, 80, 0.22);
+  /* Échelle des cartes (E1) : 1 sur un téléphone en portrait, 0,9 sous 380 px, 1,3 sur bureau ; affinée en continu
+     sur min(100dvw, 100dvh) quand le navigateur sait diviser deux longueurs (tan(atan2()) → nombre). */
+  --card-scale: 1;
+}
+@media (min-width: 1024px) and (min-height: 700px) {
+  :root {
+    --card-scale: 1.3;
+  }
+}
+@supports (top: tan(atan2(1px, 1px))) {
+  :root {
+    --card-scale: clamp(0.9, tan(atan2(min(100dvw, 100dvh), 390px)), 1.3);
+  }
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  /* Le fond reste sur la racine : un fond sur <body> passerait devant le décor fixe (z-index négatif). */
+  background: transparent;
+  color: var(--color-parchment);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  touch-action: manipulation;
+  font-family: inherit;
+}
+
+/* Focus clavier (E6) : un anneau d'or de 2 px, décalé de 3 px — distinct de l'état « jouable / choisi » des cartes
+   (anneau collé à la carte). Le focus programmatique sur un titre (E3) ne dessine rien. */
+:where(button, [role='button'], a[href], input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-gold-300);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.75);
+}
+h1[tabindex='-1']:focus,
+h1[tabindex='-1']:focus-visible,
+h2[tabindex='-1']:focus,
+h2[tabindex='-1']:focus-visible,
+[data-testid='hand']:focus,
+[data-testid='hand']:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ---- Où se pose une surface : dans la couche `components`, jamais dans sa matière (E1) ---------------
+   Une classe de matière dit DE QUOI une surface est faite (parchemin, planche, laiton, feutre) ; elle ne dit
+   jamais OÙ elle se pose. Les surfaces qui portent leur propre décor (rivets, rouleaux, punaise, brûlure) ont
+   pourtant besoin d'un bloc conteneur, et quelques pièces de décor sont posées dans leur surface : ces
+   déclarations de `position` — les seules du fichier hors pseudo-éléments — sont rassemblées ici, dans la
+   couche `components`, donc SOUS les utilitaires Tailwind (couche `utilities`).
+   Conséquence, et raison d'être du découpage : `fixed`, `absolute`, `sticky` ou `relative` posés dans le balisage
+   l'emportent TOUJOURS sur la matière. Avant lui, `.panel-parchment { position: relative }` (hors couche) battait
+   le `.fixed` de l'info-bulle, dessinée ~150 px sous le bas de l'écran et rendant la page défilable à vide
+   (UX-11) ; le même piège attendait toute surface flottante à venir.
+   `src/test/cssLayers.test.ts` monte la garde : aucune classe de ce fichier ne déclare `position` hors couche. */
+@layer components {
+  /* Surfaces qui hébergent leur propre décor (::before / ::after) ou des enfants absolus. */
+  .scene {
+    position: fixed;
+  }
+  .panel-wood,
+  .panel,
+  .panel-parchment,
+  .sign,
+  .sign-board,
+  .btn-tavern,
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger,
+  .plate-brass,
+  .stool,
+  .rule-card,
+  .barrel,
+  .icon-btn,
+  .explore-link,
+  .entry-notice .notice-paper,
+  .info-dot {
+    position: relative;
+  }
+  /* Le contenu d'un panneau de bois passe au-dessus de ses rivets. */
+  .panel-wood > *,
+  .panel > * {
+    position: relative;
+  }
+  /* Pièces de décor posées dans leur surface. */
+  .sign-rope,
+  .rule-card .lamp {
+    position: absolute;
+  }
+  /* Voile des dialogues et barre d'action collante. */
+  .veil {
+    position: fixed;
+  }
+  .sticky-cta {
+    position: sticky;
+  }
+
+/* Validated tavern storyboard, applied to the live game. */
+.home-card-back{display:block;width:126px;height:182px;object-fit:cover;align-self:center;border:1px solid #ca9a47;border-radius:12px;box-shadow:0 12px 32px #000b,0 0 38px #e5a64420;margin:5px auto 18px;animation:card-reveal .65s ease-out both}
+[data-testid=home] .sign{margin-top:0}[data-testid=home] .sign-rope{display:none}.sound-home{text-align:center;margin:12px 0 0}.btn-tavern{transition:transform .13s ease,box-shadow .2s ease}.btn-tavern:active:not(:disabled){transform:translateY(2px)}
+.table-screen.tavern-layout{max-height:none;flex:1 0 auto;overflow:visible}.table-screen.tavern-layout>.table-zone{flex:0 0 var(--seat-zone);height:var(--seat-zone);max-height:none;min-height:var(--seat-zone);overflow:visible}.tavern-layout .table-bar{position:sticky;top:0;z-index:30}.tavern-layout .table-panel{position:relative;z-index:20;background:linear-gradient(#23150ed9,#160d08);padding-top:12px;border-top:1px solid #96703f66}.tavern-layout .table-zone .trick{overflow:visible}.tavern-layout .seat-plaque{max-width:88px}.tavern-layout .seat-plaque.seat-sm{max-width:74px}.tavern-layout .card-root{filter:drop-shadow(0 3px 3px #0008)}.tavern-layout .bar-title{flex-wrap:wrap;row-gap:0}.tavern-layout .bar-title h1{font-size:14px}.tavern-layout .table-bar{min-height:60px}
+@keyframes card-reveal{from{transform:translateY(12px) rotate(-3deg);opacity:0}to{transform:translateY(0) rotate(0);opacity:1}}@media(prefers-reduced-motion:reduce){.home-card-back{animation:none}.btn-tavern{transition:none}}
+
+[data-testid=home] .sign{width:270px;padding-top:0;animation:none}[data-testid=home] .sign-board{aspect-ratio:auto;min-height:96px;padding:20px 15px}[data-testid=home] .sign h1{font-size:42px}.home-card-back{margin-bottom:10px}.confirm-card-bar{padding:8px 16px 20px}.confirm-card-bar p{min-height:20px;text-align:center;margin:0 0 8px}.confirm-card-bar button{width:100%;min-height:52px}
+}
+
+/* ---- Décor de fond (App.svelte) : une couche fixe derrière tout, selon l'écran --------------------- */
+.scene {
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background: var(--color-wood-900);
+}
+.scene::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--tex-tavern) center 30% / cover no-repeat;
+}
+/* Accueil : papier marine, bois sombre et halos de lanterne. Les autres écrans gardent leur décor. */
+.scene[data-scene='home'] { background: #21130c; }
+.scene[data-scene='home']::before {
+  opacity: .5;
+  filter: saturate(.85);
+  background-position: center 44%;
+}
+.scene[data-scene='home']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 24%, #e39d3d35, transparent 48%),
+    radial-gradient(ellipse at 20% 30%, #6a3c1a30, transparent 58%),
+    linear-gradient(180deg, #180d0899 0%, #180d0820 45%, #100907e0 100%);
+}
+/* Salles, scores, podium : la même taverne, en retrait (on est assis à une table). */
+.scene[data-scene='tavern']::before {
+  filter: brightness(0.5) saturate(0.85);
+}
+.scene[data-scene='tavern']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12, 6, 2, 0.7) 0%, rgba(12, 6, 2, 0.35) 30%, rgba(12, 6, 2, 0.45) 70%, rgba(12, 6, 2, 0.85) 100%),
+    radial-gradient(100% 70% at 50% 40%, transparent 30%, rgba(0, 0, 0, 0.55) 100%);
+}
+/* Table de jeu : la taverne dans la pénombre — la table ronde (composant) est éclairée par la lanterne. */
+.scene[data-scene='table']::before {
+  filter: brightness(0.34) saturate(0.7) blur(1.5px);
+  transform: scale(1.03);
+}
+.scene[data-scene='table']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 45% at 50% 46%, rgba(255, 170, 70, 0.14), transparent 70%),
+    linear-gradient(180deg, rgba(12, 6, 2, 0.75) 0%, rgba(12, 6, 2, 0.25) 25%, rgba(12, 6, 2, 0.3) 70%, rgba(12, 6, 2, 0.9) 100%),
+    radial-gradient(100% 70% at 50% 45%, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+/* ---- Typographie ------------------------------------------------------------------------------------ */
+.font-display,
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+.title {
+  color: var(--color-gold-300);
+  text-shadow: var(--emboss);
+}
+/* Or gravé : dégradé dans les lettres + relief. */
+.title-gold {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: #f1c95a;
+  background: var(--gold-text-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 0 #3a230a) drop-shadow(0 4px 6px rgba(0, 0, 0, 0.7));
+}
+.hint {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--color-parchment-300);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+.small-caps {
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+}
+
+/* ---- Panneau de bois : planches, biseau intérieur, liseré d'or, quatre rivets ----------------------- */
+.panel-wood,
+.panel {
+  border-radius: 14px;
+  padding: 1rem;
+  background:
+    linear-gradient(180deg, rgba(255, 220, 160, 0.07), rgba(0, 0, 0, 0.22)),
+    var(--tex-wood) center / 340px repeat;
+  border: 2px solid #150a03;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 220, 160, 0.22),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.55),
+    inset 0 0 26px rgba(0, 0, 0, 0.5),
+    0 12px 28px rgba(0, 0, 0, 0.6);
+}
+.panel-wood::before,
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(214, 167, 74, 0.32);
+  border-radius: 8px;
+  pointer-events: none;
+}
+.panel-wood::after,
+.panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--rivet), var(--rivet), var(--rivet), var(--rivet);
+  background-size: 9px 9px;
+  background-repeat: no-repeat;
+  background-position:
+    5px 5px,
+    calc(100% - 5px) 5px,
+    5px calc(100% - 5px),
+    calc(100% - 5px) calc(100% - 5px);
+}
+/* Le contenu passe au-dessus des pseudo-éléments. */
+
+/* ---- Parchemin : texture, bord brûlé, encre ------------------------------------------------------ */
+.panel-parchment {
+  border-radius: 5px;
+  padding: 1rem;
+  background: #f3e6c8 var(--tex-parchment) center / cover no-repeat;
+  color: var(--color-ink-900);
+  text-shadow: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(90, 60, 20, 0.22),
+    inset 0 0 34px rgba(90, 50, 10, 0.4),
+    0 10px 24px rgba(0, 0, 0, 0.55);
+}
+.panel-parchment .title {
+  color: var(--color-ink-900);
+  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.5);
+}
+.panel-parchment .hint {
+  color: var(--color-ink-muted);
+  text-shadow: none;
+}
+/* Note épinglée : légèrement de travers, une punaise de laiton en haut. */
+.note-pinned {
+  transform: rotate(-2deg);
+}
+.note-pinned::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fbe7a8, #c99b45 45%, #6a4a18 80%);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- Cadre d'or baroque (image découpée en bordure) ---------------------------------------------- */
+/* ---- Enseigne suspendue : deux cordes, une planche, un titre d'or ---------------------------------- */
+.sign {
+  --rope-h: 72px;
+  padding-top: var(--rope-h);
+  transform-origin: 50% 0;
+  animation: sign-swing 2.8s cubic-bezier(0.3, 0.7, 0.3, 1) 1 both;
+}
+.sign-rope {
+  top: -10px;
+  width: 7px;
+  height: calc(var(--rope-h) + 26px);
+  margin-left: -3px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(-55deg, #d2b276 0 3px, #8a6836 3px 6px, #b28f4e 6px 8px);
+  box-shadow:
+    inset -2px 0 2px rgba(0, 0, 0, 0.45),
+    2px 3px 4px rgba(0, 0, 0, 0.55);
+}
+.sign-rope-l {
+  left: 24.5%;
+}
+.sign-rope-r {
+  left: 75.5%;
+}
+.sign-board {
+  aspect-ratio: 915 / 494;
+  display: grid;
+  place-items: center;
+  padding: 12% 11% 11%;
+  background: var(--tex-sign) center / 100% 100% no-repeat;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.65));
+}
+@keyframes sign-swing {
+  0% {
+    transform: rotate(-3.5deg);
+  }
+  35% {
+    transform: rotate(2.4deg);
+  }
+  65% {
+    transform: rotate(-1.1deg);
+  }
+  85% {
+    transform: rotate(0.4deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+/* ---- Bouton de taverne : une planche épaisse, un libellé d'or gravé, s'enfonce à l'appui ---------- */
+.btn-tavern,
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  --slab: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-height: 3.25rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 10px;
+  border: 2px solid #170c04;
+  background:
+    linear-gradient(180deg, rgba(255, 218, 150, 0.14), rgba(0, 0, 0, 0.08) 50%, rgba(0, 0, 0, 0.3)),
+    var(--tex-wood) 12% 42% / 1200px repeat;
+  color: var(--color-gold-300);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  line-height: 1.05;
+  letter-spacing: 0.025em;
+  text-align: left;
+  text-shadow: var(--emboss);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 228, 175, 0.3),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(214, 167, 74, 0.25),
+    0 var(--slab) 0 #120903,
+    0 calc(var(--slab) + 8px) 16px rgba(0, 0, 0, 0.6);
+  transition:
+    transform 90ms ease-out,
+    box-shadow 90ms ease-out,
+    filter 90ms ease-out;
+}
+.btn-tavern:active:not(:disabled),
+.btn-primary:active:not(:disabled),
+.btn-secondary:active:not(:disabled),
+.btn-danger:active:not(:disabled) {
+  transform: translateY(2px);
+  filter: brightness(0.82);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 228, 175, 0.15),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(214, 167, 74, 0.2),
+    0 2px 0 #120903,
+    0 6px 10px rgba(0, 0, 0, 0.55);
+}
+.btn-tavern:disabled,
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-danger:disabled {
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+.btn-tavern:focus-visible,
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-danger:focus-visible {
+  outline: 2px solid var(--color-gold-300);
+  outline-offset: 2px;
+}
+/* Icône dans un médaillon de laiton. */
+.btn-tavern .ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--brass-grad);
+  color: #2a1608;
+  border: 1px solid #4a3010;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.35),
+    0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.btn-tavern .lbl {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0.1rem;
+}
+.btn-tavern .hint {
+  font-size: 0.82rem;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+/* Variantes de taille. Les grandes planches se bornent à la largeur de l'écran quand la police est agrandie. */
+.btn-tavern-lg {
+  min-height: 4rem;
+  font-size: min(1.55rem, 8.5vw);
+  padding: 0.8rem 1.25rem;
+}
+.btn-tavern-lg .ico {
+  width: min(2.5rem, 11vw);
+  height: min(2.5rem, 11vw);
+}
+.btn-tavern-sm,
+.btn-secondary,
+.btn-danger {
+  --slab: 3px;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 1.05rem;
+  gap: 0.5rem;
+  border-radius: 8px;
+}
+.btn-tavern-sm .ico,
+.btn-secondary .ico,
+.btn-danger .ico {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+/* Sinistre : bois teinté de rhum (quitter, retirer). */
+.btn-tavern-danger,
+.btn-danger {
+  color: #ffd9d9;
+  background:
+    linear-gradient(180deg, rgba(180, 40, 60, 0.55), rgba(90, 10, 25, 0.75)),
+    var(--tex-wood) 12% 42% / 1200px repeat;
+}
+/* Centré (bouton sans indication). */
+.btn-tavern-center,
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  text-align: center;
+  justify-content: center;
+}
+.btn-secondary {
+  color: var(--color-parchment);
+}
+
+/* ---- Jeton de laiton : pilule brillante (allumée) ou ternie (éteinte) ------------------------------ */
+.chip-brass,
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid #4a3010;
+  background: var(--brass-grad);
+  color: #2a1608;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  font-size: 0.95rem;
+  line-height: 1.1;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.55);
+  transition:
+    transform 100ms,
+    filter 100ms;
+}
+.chip-brass:active:not(:disabled),
+.chip:active:not(:disabled) {
+  transform: translateY(1px) scale(0.97);
+}
+.chip-brass:disabled,
+.chip:disabled {
+  opacity: 0.6;
+}
+/* Terni : laiton sombre, texte parchemin. */
+.chip-brass.is-off,
+.chip-brass[aria-checked='false'],
+.chip-brass[aria-pressed='false'],
+.chip:not(.chip-gold) {
+  background: var(--brass-dark-grad);
+  color: var(--color-parchment-muted);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+}
+/* Plaque de laiton (nom, badge de table) : rectangle vissé. */
+.plate-brass {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #3f2a0c;
+  background: var(--brass-grad);
+  color: #2a1608;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.3),
+    0 2px 5px rgba(0, 0, 0, 0.6);
+}
+.plate-brass::before,
+.plate-brass::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fff6d0, #8a6320 65%, #3a2608);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+.plate-brass::before {
+  left: 4px;
+}
+.plate-brass::after {
+  right: 4px;
+}
+
+/* ---- Barre de laiton (en-tête de la table) : fine bande vissée, texte gravé à l'encre ------------------ */
+.brass-bar {
+  min-height: 2.4rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #3f2a0c;
+  background: var(--brass-grad);
+  color: #2a1608;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  font-size: 0.95rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.3),
+    0 3px 6px rgba(0, 0, 0, 0.6);
+}
+.brass-bar .engraved {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  white-space: nowrap;
+}
+
+/* ---- Lanterne : jeton qui s'allume (braise) quand il est choisi ------------------------------------- */
+.lantern {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 8px;
+  border: 1px solid #3a2608;
+  background: var(--brass-dark-grad);
+  color: var(--color-parchment-muted);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+  transition:
+    box-shadow 150ms,
+    color 150ms,
+    transform 100ms;
+}
+.lantern[aria-checked='true'],
+.lantern.is-on {
+  color: #3a1a02;
+  background: radial-gradient(circle at 50% 35%, #ffe7a3 0, #ffb454 45%, #d9722a 100%);
+  border-color: #6b3a10;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 0 0 1px rgba(255, 170, 70, 0.35),
+    0 0 18px rgba(255, 150, 50, 0.55),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+}
+.lantern:active:not(:disabled) {
+  transform: scale(0.95);
+}
+.lantern:disabled {
+  opacity: 0.6;
+}
+
+/* ---- Champs : une bande de parchemin, encre --------------------------------------------------------- */
+.input,
+.input-parchment {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid rgba(90, 60, 20, 0.45);
+  background: #f3e6c8 var(--tex-parchment) center / cover;
+  color-scheme: light;
+  padding: 0.65rem 1rem;
+  color: var(--color-ink-900);
+  font-family: var(--font-body);
+  font-weight: 600;
+  outline: none;
+  box-shadow:
+    inset 0 0 18px rgba(90, 50, 10, 0.35),
+    0 3px 8px rgba(0, 0, 0, 0.5);
+}
+.input::placeholder,
+.input-parchment::placeholder {
+  color: rgba(74, 50, 32, 0.5);
+  font-style: italic;
+  font-weight: 400;
+}
+.input:focus,
+.input-parchment:focus {
+  box-shadow:
+    inset 0 0 18px rgba(90, 50, 10, 0.35),
+    0 0 0 2px var(--color-gold-400),
+    0 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Compatibilité : `.btn-primary/.btn-secondary/.btn-danger`, `.panel`, `.chip(.chip-gold)` sont des
+   alias des matières ci-dessus (sélecteurs groupés) ; `.chip-gold` = laiton brillant. ------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  font-weight: 700;
+  transition:
+    transform 100ms,
+    filter 100ms;
+}
+.btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+.btn:disabled {
+  opacity: 0.45;
+}
+.chip-gold {
+  background: var(--brass-grad);
+  color: #2a1608;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.55);
+}
+/* Bouton-icône carré : petit médaillon de bois cerclé de laiton. */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 10px;
+  border: 1px solid #170c04;
+  background:
+    linear-gradient(180deg, rgba(255, 218, 150, 0.12), rgba(0, 0, 0, 0.3)),
+    var(--tex-wood) center / 200px repeat;
+  color: var(--color-gold-300);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 228, 175, 0.25),
+    inset 0 0 0 1px rgba(214, 167, 74, 0.25),
+    0 3px 0 #120903,
+    0 6px 10px rgba(0, 0, 0, 0.55);
+  transition:
+    transform 90ms,
+    box-shadow 90ms,
+    filter 90ms;
+}
+.icon-btn:active:not(:disabled) {
+  transform: translateY(2px);
+  filter: brightness(0.85);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 228, 175, 0.15),
+    inset 0 0 0 1px rgba(214, 167, 74, 0.2),
+    0 1px 0 #120903,
+    0 3px 6px rgba(0, 0, 0, 0.5);
+}
+.icon-btn:disabled {
+  opacity: 0.45;
+}
+.icon-btn-danger {
+  color: #ffd9d9;
+  background:
+    linear-gradient(180deg, rgba(180, 40, 60, 0.6), rgba(90, 10, 25, 0.8)),
+    var(--tex-wood) center / 200px repeat;
+}
+
+/* ---- Voile des dialogues ---------------------------------------------------------------------------- */
+.veil {
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  /* Assombri, jamais flou : une feuille qui s'ouvre sur la table doit laisser LIRE la table derriere
+     elle — le flou rendait le plateau indechiffrable au moment ou on en avait besoin (Alix, 11/09). */
+  background: radial-gradient(80% 60% at 50% 60%, rgba(40, 20, 5, 0.45), rgba(8, 4, 1, 0.7));
+}
+
+/* ---- Apparition en cascade (accueil) --------------------------------------------------------------- */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise-in 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+/* Pas de mouvement pour qui n'en veut pas (E6) : cascade, balancement, pulsations et glissements coupés, les
+   changements d'état restent instantanés. Le media query ET `html[data-motion="reduce"]` (posé par main.ts). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .sign,
+  .rise,
+  .animate-pulse,
+  .animate-pulse-ring,
+  .animate-reveal,
+  .toast,
+  .tip,
+  .sheet {
+    animation: none !important;
+  }
+  .rise {
+    opacity: 1;
+    transform: none;
+  }
+}
+html[data-motion='reduce'] *,
+html[data-motion='reduce'] *::before,
+html[data-motion='reduce'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+html[data-motion='reduce'] .sign,
+html[data-motion='reduce'] .rise,
+html[data-motion='reduce'] .animate-pulse,
+html[data-motion='reduce'] .animate-pulse-ring,
+html[data-motion='reduce'] .animate-reveal {
+  animation: none !important;
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Titre de panneau : petit intitulé d'or entre deux filets de laiton ---------------------------- */
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--color-gold-300);
+  text-shadow: var(--emboss);
+}
+.panel-title::before,
+.panel-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(214, 167, 74, 0.55), transparent);
+}
+.panel-parchment .panel-title {
+  color: var(--color-ink-900);
+  text-shadow: 0 1px 0 rgba(255, 250, 230, 0.5);
+}
+.panel-parchment .panel-title::before,
+.panel-parchment .panel-title::after {
+  background: linear-gradient(90deg, transparent, rgba(74, 50, 32, 0.5), transparent);
+}
+
+/* ---- Tabouret : une assise ronde de bois cerclée de laiton, sous un avatar -------------------------- */
+.stool {
+  display: inline-flex;
+  padding-bottom: 8px;
+  isolation: isolate;
+}
+.stool::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 46px;
+  height: 16px;
+  margin-left: -23px;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(255, 220, 160, 0.25), transparent 60%),
+    var(--tex-wood) center / 90px;
+  border: 1px solid #170c04;
+  box-shadow:
+    inset 0 0 0 1px rgba(214, 167, 74, 0.45),
+    0 3px 0 #120903,
+    0 5px 6px rgba(0, 0, 0, 0.55);
+  z-index: -1;
+}
+
+/* ---- Interrupteur-carte : vignette encadrée de laiton, nom, témoin allumé/éteint ----------- */
+.rule-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.15rem 0.35rem;
+  border-radius: 8px;
+  border: 1px solid rgba(23, 12, 4, 0.9);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.5));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 220, 160, 0.08),
+    inset 0 0 0 1px rgba(214, 167, 74, 0.18);
+  transition:
+    transform 120ms,
+    box-shadow 150ms;
+  -webkit-touch-callout: none;
+}
+.rule-card:active {
+  transform: scale(0.95);
+}
+.rule-card .thumb {
+  width: 40px;
+  height: 57px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 2px solid #b5852f;
+  box-shadow:
+    inset 0 0 0 1px #3a2608,
+    0 3px 6px rgba(0, 0, 0, 0.6);
+  background: #1d1108;
+  transition: filter 150ms;
+}
+.rule-card .name {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+  font-size: 0.75rem;
+  line-height: 1.05;
+  min-height: 2.1em;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--color-parchment);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
+  max-width: 100%;
+}
+/* Témoin : une petite lampe de laiton, braise quand la règle est allumée. */
+.rule-card .lamp {
+  top: 4px;
+  right: 4px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid #3a2608;
+  background: radial-gradient(circle at 40% 35%, #6a5432, #2a1c0a);
+  transition:
+    background 150ms,
+    box-shadow 150ms;
+}
+.rule-card[aria-checked='true'] {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 220, 160, 0.12),
+    inset 0 0 0 1px rgba(214, 167, 74, 0.55),
+    0 0 12px rgba(255, 170, 70, 0.18);
+}
+.rule-card[aria-checked='true'] .lamp {
+  background: radial-gradient(circle at 40% 35%, #fff1b0, #ffb454 45%, #d9722a);
+  box-shadow: 0 0 8px rgba(255, 150, 50, 0.85);
+}
+.rule-card[aria-checked='false'] .thumb {
+  /* Règle éteinte : la vignette s'efface sans devenir illisible (vague 7 — on reconnaît la carte d'un coup d'œil). */
+  filter: saturate(0.4) brightness(0.7);
+  border-color: #4a3820;
+}
+.rule-card[aria-checked='false'] .name {
+  color: var(--color-parchment-muted);
+}
+
+/* ---- Sceau de cire : un disque de cire rouge, un crâne pressé dedans ----------------------------- */
+.wax-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  color: rgba(255, 220, 220, 0.85);
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.35), transparent 40%),
+    radial-gradient(circle at 50% 50%, #c0303f 0, #8b1e2b 60%, #5e0f1a 100%);
+  border: 2px solid #7a1a28;
+  box-shadow:
+    inset 0 0 0 5px rgba(255, 255, 255, 0.06),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.45),
+    0 3px 6px rgba(0, 0, 0, 0.55);
+  transform: rotate(-12deg);
+}
+
+/* ---- Pièce d'or : un petit disque de laiton pour les totaux ------------------------------------------ */
+.coin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  border: 1px solid #5a3d12;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.55), transparent 45%),
+    var(--brass-grad);
+  color: #2a1608;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 240, 200, 0.35),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.35),
+    0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- Code de table : un code qu'on DICTE et qu'on retape ---------------------------------------------- */
+/* Vague 8 (#7, audit visuel #36) : il était composé en Pirata One (blackletter) — I/J/L/S/E/D/U y sont ambigus.
+   Monospace, lettres bien espacées, chiffres et lettres sans ambiguïté possible. */
+.code-text {
+  font-family: var(--font-mono, ui-monospace, 'SFMono-Regular', 'Cascadia Mono', 'Roboto Mono', Menlo, monospace);
+  font-weight: 700;
+  font-variant: normal;
+  letter-spacing: 0.22em;
+  /* La dernière lettre ne doit pas être poussée hors de l'axe par son interlettre. */
+  text-indent: 0.22em;
+}
+
+/* Pièce ternie (score nul) et pièce de cuivre sombre (score négatif) : la valeur se lit à la matière, pas
+   seulement au chiffre (vague 8, #7). */
+.coin.is-zero {
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.28), transparent 45%),
+    linear-gradient(180deg, #c3b795 0%, #8e8468 55%, #a89c7c 100%);
+  border-color: #4d4432;
+  color: #241f13;
+  box-shadow:
+    inset 0 0 0 2px rgba(240, 236, 215, 0.3),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.35),
+    0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.coin.is-loss {
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 220, 200, 0.3), transparent 45%),
+    linear-gradient(180deg, #a8674a 0%, #6d3a26 55%, #8a5138 100%);
+  border-color: #3a1d10;
+  color: #ffe7dc;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 200, 175, 0.25),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.45),
+    0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- Tonneau : une marche de podium en bois cerclée de laiton ----------------------------------------- */
+.barrel {
+  width: 100%;
+  border-radius: 12px 12px 8px 8px;
+  border: 2px solid #150a03;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.45), rgba(255, 220, 160, 0.12) 35%, rgba(255, 220, 160, 0.08) 65%, rgba(0, 0, 0, 0.5)),
+    var(--tex-wood) center / 120px 100%;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 220, 160, 0.2),
+    0 10px 20px rgba(0, 0, 0, 0.6);
+}
+.barrel::before,
+.barrel::after {
+  content: '';
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  height: 7px;
+  background: var(--brass-grad);
+  border: 1px solid #3f2a0c;
+  border-radius: 2px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+.barrel::before {
+  top: 7px;
+}
+.barrel::after {
+  bottom: 7px;
+}
+
+/* ---- CTA collant (salons) : « Lancer la partie » toujours visible, sur un dégradé de nuit ------------------- */
+.sticky-cta {
+  bottom: 0;
+  z-index: 30;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding: 0.75rem 1rem 0.25rem;
+  background: linear-gradient(180deg, rgba(18, 9, 3, 0) 0%, rgba(18, 9, 3, 0.9) 40%, rgba(18, 9, 3, 0.96) 100%);
+}
+/* Salon (#24) : le pied collé ne doit rien cacher — son dégradé (0,75 rem) est complété d'1 rem de marge haute, de
+   sorte que ce qui le précède (la proposition de notifications) s'arrête toujours 16 px au-dessus du voile sombre,
+   page défilée ou non. */
+.lobby-cta {
+  padding-top: 1.75rem;
+  margin-top: auto;
+}
+
+/* Petit « i » d'explication sur un libellé (#19), 44 px de zone tactile grâce au pseudo-élément. */
+.info-dot {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-gold-500, #d4a52a);
+  color: var(--color-gold-300, #f4d67a);
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 1;
+  background: rgba(0, 0, 0, 0.3);
+}
+.info-dot::before {
+  content: '';
+  position: absolute;
+  inset: -0.75rem;
+}
+/* A11Y-08 — sur parchemin, l'or du jeton tombe à 2,33:1 (texte) et 1,50:1 (bordure) : la matière claire mange sa
+   propre couleur. Sur cette matière, le « i » passe donc à l'encre (11,2:1 / 8,2:1) ; sur bois il reste doré
+   (12,71:1 mesuré), et c'est bien la même pastille. */
+.panel-parchment .info-dot {
+  color: var(--color-ink-900);
+  border-color: var(--color-ink-700);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ---- Liste déroulante sur parchemin (préréglage de règles) ------------------------------------------------ */
+select.preset {
+  cursor: pointer;
+}
+select.preset option {
+  color: var(--color-ink-900);
+  background: var(--color-parchment);
+}
+
+/* ---- Contraste forcé (E11) : les états coché / allumé / choisi se lisent à la bordure, pas à la couleur ------------ */
+@media (forced-colors: active) {
+  [role='switch'][aria-checked='true'],
+  [role='radio'][aria-checked='true'],
+  [aria-pressed='true'],
+  .lantern.is-on {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+  [role='switch'][aria-checked='false'],
+  [role='radio'][aria-checked='false'] {
+    outline: 1px dashed CanvasText;
+    outline-offset: 2px;
+  }
+  .rule-card .lamp,
+  .avatar .medal,
+  .plaque,
+  .turn-banner,
+  .ink,
+  .chip-brass,
+  .btn-tavern {
+    forced-color-adjust: none;
+    border: 1px solid CanvasText;
+  }
+  .rule-card[aria-checked='true'] .lamp {
+    background: Highlight;
+  }
+  .plaque.is-active,
+  .turn-banner.is-mine {
+    outline: 3px solid Highlight;
+  }
+}
+
+/* ---- Disposition compacte (E1) : paysage, zoom 200 % (640×400), très petits écrans ------------------------------- */
+/* Sous 520 px de haut, la table passe à gauche et tout le reste (barre, bannières, pari, main) dans une colonne
+   défilante à droite : les boutons de pari et la main ne sont jamais masqués, le parchemin ne recouvre rien. */
+.table-screen {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  min-height: 0;
+  /* L'écran de table ne défile pas : il tient dans la fenêtre, et ce sont ses parts qui s'ajustent. */
+  max-height: calc(100dvh - max(1rem, env(safe-area-inset-top)) - max(1rem, env(safe-area-inset-bottom)));
+}
+.table-screen > .table-zone {
+  /* Vague 8 (#4) : la table s'arrête à sa hauteur NATURELLE (le disque est plafonné par la largeur) — au-delà elle
+     n'ajoutait que du vide (143 à 216 px mesurés entre l'en-tête et le tapis). Ce qui reste va à la main, dont la
+     hauteur est réservée AVANT (`--hand-h` / `handFit`). */
+  flex: 1 1 auto;
+  max-height: var(--table-natural, 26rem);
+  min-height: 0;
+  overflow: hidden;
+}
+.table-screen > .table-panel {
+  /* La colonne du bas prend EXACTEMENT ce qu'il lui faut (la main a déjà sa hauteur réservée) : tout le reste va
+     au tapis, jusqu'à sa hauteur naturelle. */
+  flex: 0 0 auto;
+  min-height: 0;
+}
+.table-screen > .table-zone.strip ~ .table-panel {
+  flex: 1 1 auto;
+}
+.table-screen.compact {
+  --card-scale: 0.85;
+  /* La hauteur doit être définie pour que la ligne `1fr` de la grille (et donc la table) prenne toute la place :
+     l'écran entier moins les marges de `main`. En largeur, on sort de la colonne de `main` (28 rem) pour occuper
+     tout l'écran : la table à gauche, la colonne à droite. */
+  height: calc(100dvh - max(1rem, env(safe-area-inset-top)) - max(1rem, env(safe-area-inset-bottom)) - var(--entete-app, 0px));
+  width: calc(100dvw - 1rem);
+  margin-left: calc(50% - 50dvw + 0.5rem);
+  margin-right: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 44%);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    'table header'
+    'table panel';
+  column-gap: 0.5rem;
+}
+.table-screen.compact > .table-bar {
+  grid-area: header;
+  margin: 0 0.5rem 0 0;
+}
+.table-screen.compact > .table-zone {
+  grid-area: table;
+  min-height: 0;
+}
+.table-screen.compact > .table-zone {
+  height: auto;
+}
+.table-screen.compact > .table-panel {
+  grid-area: panel;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+.table-screen.compact .hand {
+  margin: 0;
+  padding: 0.75rem 0 0.25rem;
+}
+/*
+ * PAYSAGE — RENDRE À LA MAIN LA HAUTEUR QUE LE BOUTON PRENAIT (rapport #10 d'Alix : « pouvoir pivoter
+ * l'écran de façon horizontale afin d'agrandir l'écran »).
+ *
+ * Mesuré au navigateur en 852×393, colonne de droite de 257 px : la barre « Jouer cette carte » en occupait
+ * **108**, plus que la main elle-même (100) — et le total débordait de 9 px. Tourner le téléphone donnait donc
+ * des cartes de 47 px, plus PETITES qu'en portrait : l'inverse de ce qu'on attend en tournant l'écran.
+ *
+ * Le bouton garde ses 44 px de cible tactile — c'est un plancher, pas une préférence — mais il perd ses marges
+ * de portrait et sa ligne d'invite s'écrit plus serrée. Le reste va à la main, qui est ce qu'on regarde.
+ */
+.table-screen.compact .confirm-card-bar {
+  padding: 2px 8px 4px;
+}
+.table-screen.compact .confirm-card-bar p {
+  font-size: 12px;
+  min-height: 0;
+  margin-bottom: 3px;
+  line-height: 1.2;
+}
+.table-screen.compact .confirm-card-bar button {
+  min-height: 44px;
+}
+/* La fente d'état (bandeau de tour, dernière carte posée) : deux lignes serrées plutôt que trois aérées. */
+.table-screen.compact .cue-slot {
+  margin-top: 0;
+}
+.table-screen.compact .turn-banner {
+  flex-wrap: wrap;
+  justify-content: center;
+  border-radius: 12px;
+}
+.table-screen.compact .turn-banner .truncate {
+  white-space: normal;
+  overflow: visible;
+  text-align: center;
+}
+/* Police agrandie en portrait (`strip`) : plus de table ronde, les sièges en rangée et le pli en ligne — tout reste
+   lisible et rien ne se recouvre. */
+.table-screen > .table-zone.strip {
+  flex: none;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+/* A11Y-01 (BLOQUANT) — à 200 % de police, la somme des parts (feuille de pari 787 px, main 326 px, sièges…) dépasse
+   l'écran. L'écran de table ne défilait pas : ses parts étaient COMPRESSÉES, `.hand-box` tombait à 0 px de haut et
+   les cartes, qui gardent leur taille, se dessinaient par-dessus les touches 6 à 10 (`elementFromPoint` y renvoyait
+   `DIV.card-root`). Ici, plus rien ne se comprime : c'est l'écran qui défile — le seul remède compatible avec WCAG
+   1.4.4, qui autorise le défilement mais pas la perte de fonctionnalité. */
+.table-screen.strip {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.table-screen.strip > * {
+  flex: 0 0 auto;
+}
+/* A11Y-06 — la barre de laiton n'écrase plus son titre : elle passe sur deux lignes, le titre a la barre pour lui.
+   À 200 %, les deux boutons de 88 px prenaient toute la largeur et le `h1` mesurait 0 px (`scrollWidth` 329). */
+.table-screen.strip > .table-bar {
+  flex-wrap: wrap;
+  row-gap: 0.15rem;
+}
+.table-screen.strip > .table-bar > .bar-title {
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  overflow: visible;
+}
+.table-screen.strip > .table-bar > .bar-title > h1 {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+/* La feuille de pari gagne la largeur de ses marges : trois colonnes de touches au lieu de deux, donc quatre rangées
+   au lieu de six (787 px → 536 px) — tout le clavier de pari tient alors dans un écran. */
+.table-screen.strip [data-testid='bid-panel'] {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+/* A11Y-06 — en rangée, la plaque suit la largeur de son nom au lieu de le trancher (« Barb / Noir », `clientWidth`
+   58 pour `scrollWidth` 92) : la géométrie ronde, elle, garde ses plaques de largeur fixe. */
+.table-zone.strip .seat-plaque {
+  width: auto;
+  min-width: calc(88px * var(--plaque-scale, 1));
+  max-width: 100%;
+}
+.table-zone.strip .seat-plaque.seat-sm {
+  min-width: calc(70px * var(--plaque-scale, 1));
+}
+.table-zone.strip .seat-plaque .name {
+  width: max-content;
+  max-width: 10rem;
+  height: auto;
+  overflow-wrap: anywhere;
+}
+/* Les cartes du pli suivent l'échelle de la table (`layout.cardScale`), pas celle de la main. */
+.table-zone .trick {
+  --card-scale: 1;
+}
+@media (max-width: 380px) {
+  :root {
+    --card-scale: 0.9;
+  }
+}
+/* Vague 8 (#4, M9) : la barre de laiton reste sur UNE ligne, toujours. Avec `flex-wrap: wrap` elle passait à deux
+   lignes dès que le titre atteignait la largeur (52 → 77 px sur 360 px), et toute la page se décalait de 25 px au
+   premier pli. Le titre se tronque à la place ; le compteur de plis et les boutons ne bougent jamais. */
+.table-bar {
+  flex-wrap: nowrap;
+}
+
+/* ---- Bureau (E8) : la colonne s'élargit (`main` en max-w-2xl), le décor couvre toute la hauteur ------------------ */
+@media (min-width: 1024px) {
+  .scene::before {
+    background-position: center 40%;
+  }
+}
+
+/* Curseurs de laiton (feuille des bots, plan de manches perso) : piste de cuir, poignée de laiton. */
+.slider-brass {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 2.75rem;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+}
+.slider-brass:focus {
+  outline: none;
+}
+.slider-brass::-webkit-slider-runnable-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.3));
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 228, 175, 0.18);
+}
+.slider-brass::-moz-range-track {
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.3));
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+.slider-brass::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: -0.5rem;
+  border-radius: 9999px;
+  border: 2px solid #3a2608;
+  background: radial-gradient(circle at 35% 30%, #fbe7a8, #d3a94a 45%, #8a5a1a 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), inset 0 -2px 3px rgba(0, 0, 0, 0.35);
+}
+.slider-brass::-moz-range-thumb {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  border: 2px solid #3a2608;
+  background: radial-gradient(circle at 35% 30%, #fbe7a8, #d3a94a 45%, #8a5a1a 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.slider-brass:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(232, 191, 74, 0.6), 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.slider-brass:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 3px rgba(232, 191, 74, 0.6), 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Taverne usée : peaux décoratives, cibles et focus jamais découpés. */
+html:root {
+  --skin-wood: url('/ui/worn-wood-v1.webp');
+  --skin-paper: url('/ui/worn-paper-v1.webp');
+}
+
+html:root :is(.btn-tavern,.btn-primary,.btn-secondary,.btn-danger,.icon-btn,.explore-link,.panel-wood,.panel) {
+  isolation: isolate;
+  background: none;
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 3px;
+}
+html:root :is(.btn-tavern,.btn-primary,.btn-secondary,.btn-danger,.icon-btn,.explore-link,.panel-wood,.panel)::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  width: auto;
+  height: auto;
+  margin: 0;
+  z-index: -1;
+  pointer-events: none;
+  border: 0;
+  border-radius: 0;
+  background: var(--skin-wood) center/100% 100% no-repeat;
+  box-shadow: none;
+  clip-path: none;
+  filter: drop-shadow(0 4px 3px #0009);
+  transform: rotate(-.35deg);
+}
+html:root :is(.btn-tavern,.btn-primary,.btn-secondary,.btn-danger,.panel-wood,.panel)::after {
+  content: none;
+}
+
+html:root :is(.btn-tavern,.icon-btn,.explore-link):nth-child(even)::before {
+  transform: rotate(.55deg) scaleX(-1);
+  filter: sepia(.18) brightness(.91) drop-shadow(0 4px 3px #0009);
+}
+
+html:root :is(.panel-wood,.panel):nth-of-type(even)::before {
+  transform: scaleX(-1);
+  filter: saturate(.75) drop-shadow(0 4px 3px #0009);
+}
+
+html:root :is(.btn-danger,.btn-tavern-danger,.icon-btn-danger)::before {
+  filter: sepia(.5) saturate(2) hue-rotate(325deg) drop-shadow(0 3px 3px #0009);
+}
+
+html:root .btn-secondary::before {
+  filter: saturate(.6) brightness(.85);
+}
+
+html:root .icon-btn::before {
+  inset: -2px;
+  transform: rotate(-2deg);
+}
+
+html:root .welcome-actions::before {
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+
+html:root .play-ticket {
+  text-shadow: 0 2px 3px #100805;
+}
+
+html:root .friends-ticket::before {
+  transform: rotate(.6deg) scaleX(-1);
+}
+
+html:root .explore-link {
+  color: #edce95;
+}
+
+html:root .explore-link small {
+  color: #dfc9a4;
+}
+
+/* Neuf tranches : les bords restent fins même sur les longs dialogues.
+   La bordure remplie suit le défilement natif sans pseudo-élément derrière le texte. */
+html:root :is(.panel-parchment,.notice-paper,.input-parchment,.input) {
+  background: #f0dfb9;
+  background-clip: content-box;
+  border-color: transparent;
+  border-image-source: var(--skin-paper);
+  border-image-slice: 90 fill;
+  border-image-width: 18px;
+  border-image-repeat: stretch;
+  border-radius: 2px;
+  box-shadow: none;
+  color: #302014;
+}
+html:root :is(.input-parchment,.input) {
+  border-image-width: 10px;
+  filter: drop-shadow(0 2px 2px #3b220844);
+}
+
+html:root .panel-parchment:not(.note-pinned)::before, html:root .panel-parchment:not(.note-pinned)::after,
+html:root .entry-notice .notice-paper::before {
+  content: none;
+}
+
+html:root :is(.input-parchment,.input):focus-visible {
+  outline: 2px solid #8c581d;
+  outline-offset: 3px;
+}
+
+html:root :is(.btn-tavern,.btn-primary,.btn-secondary,.btn-danger,.icon-btn,.explore-link):focus-visible {
+  outline: 3px solid #ffe4a4;
+  outline-offset: 3px;
+}
+
+html:root :is(.input-parchment,.input) option {
+  color: #302014;
+  background: #f0dfb9;
+}
+
+html:root .sheet-heading {
+  background: #eeddba var(--tex-parchment) center/cover;
+  box-shadow: 0 4px 6px #cbb18044;
+  border-bottom: 1px dashed #78542d55;
+}
+
+html:root .sheet-close {
+  border-radius: 43% 29% 38% 24%;
+  border: 1px solid #70533380;
+  background: #61452010;
+}
+
+html:root :is(.chip-brass,.chip,.plate-brass,.brass-bar,.lantern,.coin) {
+  background-image: linear-gradient(112deg,#8b4f2830,transparent 34%,#3a25032b 73%,#e6c67133),var(--brass-grad);
+  border-radius: 8px 4px 9px 3px;
+}
+html:root :is(.chip-brass,.chip)[aria-pressed='true'], html:root .lantern[aria-checked='true'] {
+  background: #f0ca70;
+  color: #2c190a;
+  box-shadow: inset 0 0 0 2px #644017,0 0 9px #e2ad4c66;
+}
+
+html:root .rule-card {
+  background: linear-gradient(#10090580,#10090580),var(--skin-wood) center/100% 100%;
+  border-radius: 9px 3px 7px 4px;
+  border-color: #7b583b;
+}
+
+html:root .rule-card[aria-checked='true'] {
+  border-color: #ffdc86;
+}
+
+html:root .stool::after {
+  background: var(--skin-wood) center/100% 100%;
+  border: 0;
+  box-shadow: none;
+}
+
+html:root .sign-board {
+  background: var(--skin-wood) center/100% 100%;
+  border: 0;
+}
+
+/* En jeu : bois patiné autour, feutre calme et cartes intactes au centre. */
+html:root .round-table .rim {
+  background: linear-gradient(125deg,#ad773744,#140a0555 40%,#73452744 78%),var(--tex-wood) 18% 40%/620px;
+  border-radius: 49% 51% 48% 52% / 48% 49% 51% 52%;
+}
+
+html:root .round-table .felt {
+  background: radial-gradient(ellipse at 23% 31%,#aca37617,transparent 39%),radial-gradient(ellipse at 82% 76%,#020b0888,transparent 45%),var(--tex-felt) center/440px;
+  border-radius: 50% 48% 51% 49% / 49% 51% 48% 50%;
+  box-shadow: inset 0 0 0 2px #142419,inset 0 0 0 3px #ac8c4355,inset 0 6px 16px #0009;
+}
+
+html:root .plaque {
+  background: linear-gradient(#130c0855,#130c0855),var(--skin-wood) center/100% 100%;
+  border-radius: 9px 4px 8px 3px;
+  border-color: #98704477;
+}
+
+html:root .plaque.is-me {
+  border-color: #dfb65c;
+}
+
+html:root .plaque.is-active {
+  background: linear-gradient(#98632533,#2b1a0855),var(--skin-wood) center/100% 100%;
+  border-color: #ffe6a1;
+}
+
+html:root .turn-banner, html:root .verdict {
+  background: #342516 var(--skin-wood) center/100% 100%;
+  border-radius: 7px 3px 10px 5px;
+}
+
+html:root .turn-banner.is-mine, html:root .verdict.is-mine {
+  background: #ecd092 var(--skin-paper) center/100% 100%;
+  color: #302014;
+}
+
+html:root .table-panel {
+  border-top-style: dashed;
+}
+
+html:root .barrel {
+  background-image: linear-gradient(#38200b33,#160c0780),var(--skin-wood);
+  background-size: 100% 100%;
+}
+
+
+/* Champs courts : une feuille entière évite l'écrasement des neuf tranches. */
+html:root :is(.input-parchment,.input) {
+  border-image: none;
+  background-image: var(--skin-paper),none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f0dfb9;
+  background-origin: border-box,content-box;
+  background-clip: border-box,content-box;
+}
+html:root :is(.chip-brass,.chip,.brass-bar) {
+  border-color: transparent;
+  background: #edd8ae;
+  background-clip: content-box;
+  border-image: var(--skin-paper) 90 fill / 10px / 0 stretch;
+  color: #352214;
+  box-shadow: none;
+  text-shadow: none;
+}
+html:root :is(.chip-brass,.chip)[aria-pressed='true'], html:root :is(.chip-brass,.chip)[aria-checked='true'] {
+  border-image: none;
+  border: 1px solid #563812;
+  background: #c99a48;
+  color: #22170e;
+  box-shadow: inset 0 0 0 2px #644017;
+}
+html:root .coin {
+  border-radius: 45% 49% 43% 48%;
+  background-image: linear-gradient(115deg,#7a481f44,transparent 35%,#34221333),var(--brass-grad);
+}
+
+
+/* Le chevron reste visible au-dessus de la texture, y compris sur Android. */
+html:root select.input-parchment:not(.preset) {
+  appearance: none;
+  padding-right: 2rem;
+  background-image: url('/ui/chevron-down.svg'),var(--skin-paper),none;
+  background-size: 12px 8px,100% 100%,auto;
+  background-position: right 12px center,center,center;
+  background-origin: border-box,border-box,content-box;
+  background-clip: border-box,border-box,content-box;
+}
+
+/* Les panneaux développés gardent des coins de taille constante : pas de
+   clous géants ni de marge transparente étirée sous le titre du résumé. */
+html:root :is(.panel-wood,.panel)::before {
+  background: none;
+  border-image: var(--skin-wood) 180 150 fill / 18px / 0 stretch;
+}
+html:root .paper-choice {
+  border-radius: 7px 3px 9px 4px;
+  background: #e4cda2;
+  background-clip: content-box;
+  border-image: var(--skin-paper) 90 fill / 9px / 0 stretch;
+  box-shadow: none;
+  color: #302014;
+}
+html:root .paper-choice:hover {
+  filter: brightness(1.06);
+}
+
+/* Une bordure remplie se peint au-dessus du chevron : les contrôles natifs
+   n'en gardent aucune, même quand une règle de surface est recomposée. */
+html:root select.input-parchment,
+html:root input.input-parchment,
+html:root textarea.input-parchment {
+  border-image-source: none;
+}
+
+/* En paysage, avatar et texte occupent deux colonnes bornées : les noms
+   et les compteurs restent sur leur plaque même avec un pseudo long. */
+html:root .table-screen.compact .seat-plaque {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.25rem;
+  row-gap: 0;
+  width: 112px;
+  min-width: 0;
+  max-width: 112px;
+  min-height: 0;
+  padding: 0.2rem 0.4rem;
+  border-radius: 9px 5px 8px 6px;
+}
+html:root .table-screen.compact .seat-plaque .name {
+  font-size: 0.68rem;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  height: auto;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  text-overflow: ellipsis;
+}
+html:root .table-screen.compact .seat-plaque > span:first-child {
+  grid-row: 1 / 3;
+  margin-top: 0;
+}
+html:root .table-screen.compact .seat-plaque > span:last-child {
+  min-width: 0;
+  gap: 2px;
+}

@@ -1,0 +1,20 @@
+{
+  "strengthPenalty": 0.441,
+  "takeThreshold": 0.45,
+  "takeThresholdLow": 0.25,
+  "lowStrength": 0.45,
+  "urgencyTake": 0.6,
+  "dumpDanger": 0.0359,
+  "giftWeight": 0.12,
+  "bluffSpreadPlay": 0.1382,
+  "bluffSpreadMc": 12.5384,
+  "prudenceVar": 0.35,
+  "maliceLeader": 0.2213,
+  "maliceZero": 0.4372,
+  "oppScore": 0,
+  "bidShift": 0,
+  "bonusScale": 114.0424,
+  "bidSamplesMult": 1,
+  "zeroBidPenalty": 5.6496,
+  "bidInference": 0
+}

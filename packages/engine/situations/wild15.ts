@@ -1,0 +1,148 @@
+// Situations « wild15 » : cas d'école posés comme de mini-parties, avec le résultat que le moteur doit produire.
+// Les attendus décrivent les règles de Flibuste (voir docs/REGLES.md), écrites pour ce projet.
+import { EXPANSION_ALL } from '../src/types';
+import type { Situation } from './types';
+
+const EXT = { expansion: EXPANSION_ALL };
+const P3 = ['anne', 'bob', 'carl'];
+const P4 = ['anne', 'bob', 'carl', 'dora'];
+
+export const WILD15: Situation[] = [
+  {
+    id: 'wild15-lead-chooses-the-suit',
+    card: 'wild15',
+    title: 'En tête, le joueur choisit la couleur du 15, et elle devient la couleur demandée',
+    rule: 'En tête, le joueur choisit la couleur du 15, et elle devient la couleur demandée',
+    spec: { rules: EXT, players: P3, hands: { anne: ['wild15', 'map-2'], bob: ['map-3', 'chest-4'], carl: ['map-5', 'chest-6'] }, bids: { anne: 0, bob: 1, carl: 0 } },
+    steps: [
+      { by: 'anne', play: 'wild15', as: 'roger', illegal: 'bad-value' },
+      { by: 'anne', play: 'wild15', illegal: 'bad-value' },
+      { by: 'anne', play: 'wild15', as: 'map' },
+    ],
+    expect: { toAct: 'bob', legal: { player: 'bob', cards: ['map-3'] }, cannot: { player: 'bob', card: 'chest-4', reason: 'must-follow-suit' } },
+  },
+  {
+    id: 'wild15-must-take-the-led-colour',
+    card: 'wild15',
+    title: 'Une couleur déjà demandée : le 15 ne peut être déclaré que dans cette couleur',
+    rule: 'Une couleur déjà demandée : le 15 ne peut être déclaré que dans cette couleur',
+    spec: { rules: EXT, players: P3, hands: { anne: ['chest-2'], bob: ['wild15', 'chest-3'], carl: ['chest-4', 'chest-5'] }, bids: { anne: 0, bob: 1, carl: 0 }, trick: { leader: 'anne', plays: [{ player: 'anne', card: 'map-7' }] } },
+    steps: [
+      { by: 'bob', play: 'wild15', as: 'chest', illegal: 'bad-value' },
+      { by: 'bob', play: 'wild15', as: 'parrot', illegal: 'bad-value' },
+      { by: 'bob', play: 'wild15', as: 'roger', illegal: 'bad-value' },
+    ],
+    expect: { phase: 'playing', toAct: 'bob' },
+  },
+  {
+    id: 'wild15-never-forces-following-suit',
+    card: 'wild15',
+    title: 'Le 15 joker ne compte pas comme une carte de la couleur demandée : il n’oblige jamais à le jouer',
+    rule: 'Le 15 joker ne compte pas comme une carte de la couleur demandée : il n’oblige jamais à le jouer',
+    spec: { rules: EXT, players: P3, hands: { anne: ['chest-2'], bob: ['wild15', 'chest-3'], carl: ['chest-4', 'chest-5'] }, bids: { anne: 0, bob: 1, carl: 0 }, trick: { leader: 'anne', plays: [{ player: 'anne', card: 'map-7' }] } },
+    expect: { toAct: 'bob', legal: { player: 'bob', cards: ['wild15', 'chest-3'] } },
+  },
+  {
+    id: 'wild15-beats-the-14-of-its-colour',
+    card: 'wild15',
+    title: 'Le 15 joker bat le 14 de la couleur qu’il prend',
+    rule: 'Le 15 joker bat le 14 de la couleur qu’il prend',
+    spec: { rules: EXT, players: P3, hands: { anne: ['map-14'], bob: ['wild15'], carl: ['map-2'] }, bids: { anne: 0, bob: 1, carl: 0 } },
+    steps: [{ by: 'anne', play: 'map-14' }, { by: 'bob', play: 'wild15', as: 'map' }, { by: 'carl', play: 'map-2' }],
+    expect: { winner: 'bob', trickBonus: 10, score: { bob: { base: 20, bonus: 10, total: 30 } } },
+  },
+  {
+    id: 'wild15-loses-to-trump',
+    card: 'wild15',
+    title: 'Le 15 joker perd contre le noir : l’atout reste au-dessus',
+    rule: 'Le 15 joker perd contre le noir : l’atout reste au-dessus',
+    spec: { rules: EXT, players: P3, hands: { anne: ['map-14'], bob: ['wild15'], carl: ['roger-2'] }, bids: { anne: 0, bob: 0, carl: 1 } },
+    steps: [{ by: 'anne', play: 'map-14' }, { by: 'bob', play: 'wild15', as: 'map' }, { by: 'carl', play: 'roger-2' }],
+    expect: { winner: 'carl', trickBonus: 10 },
+  },
+  {
+    id: 'wild15-on-a-black-lead-is-a-losing-card',
+    card: 'wild15',
+    title: 'Le noir mené : le 15 se pose sans déclaration et ne peut pas gagner',
+    rule: 'Le noir mené : le 15 se pose sans déclaration et ne peut pas gagner',
+    spec: { rules: EXT, players: P3, hands: { anne: ['roger-5'], bob: ['wild15'], carl: ['roger-2'] }, bids: { anne: 1, bob: 0, carl: 0 } },
+    steps: [
+      { by: 'anne', play: 'roger-5' },
+      { by: 'bob', play: 'wild15', as: 'parrot', illegal: 'bad-value' },
+      { by: 'bob', play: 'wild15' },
+      { by: 'carl', play: 'roger-2' },
+    ],
+    expect: { winner: 'anne', trickBonus: 0 },
+  },
+  {
+    id: 'wild15-loses-to-a-pirate',
+    card: 'wild15',
+    title: 'Le 15 joker reste une carte de couleur : un pirate le bat',
+    rule: 'Le 15 joker reste une carte de couleur : un pirate le bat',
+    spec: { rules: EXT, players: P3, hands: { anne: ['wild15'], bob: ['pirate-helm'], carl: ['map-3'] }, bids: { anne: 0, bob: 1, carl: 0 } },
+    steps: [{ by: 'anne', play: 'wild15', as: 'map' }, { by: 'bob', play: 'pirate-helm' }, { by: 'carl', play: 'map-3' }],
+    expect: { winner: 'bob', pending: null, trickBonus: 0 },
+  },
+  {
+    id: 'wild15-loses-to-the-mate',
+    card: 'wild15',
+    title: 'Le Second bat aussi le 15 joker',
+    rule: 'Le Second bat aussi le 15 joker',
+    spec: { rules: EXT, players: P3, hands: { anne: ['wild15'], bob: ['mate'], carl: ['chest-3'] }, bids: { anne: 0, bob: 1, carl: 0 } },
+    steps: [{ by: 'anne', play: 'wild15', as: 'chest' }, { by: 'bob', play: 'mate' }, { by: 'carl', play: 'chest-3' }],
+    expect: { winner: 'bob', trickBonus: 0 },
+  },
+  {
+    id: 'wild15-lead-suit-decides-the-resolution',
+    card: 'wild15',
+    title: 'Le 15 joker en tête fixe la couleur : une carte hors couleur ne compte pas, même plus forte',
+    rule: 'Le 15 joker en tête fixe la couleur : une carte hors couleur ne compte pas, même plus forte',
+    spec: { rules: EXT, players: P3, hands: { anne: ['wild15'], bob: ['chest-14'], carl: ['map-2'] }, bids: { anne: 1, bob: 0, carl: 0 } },
+    steps: [{ by: 'anne', play: 'wild15', as: 'map' }, { by: 'bob', play: 'chest-14' }, { by: 'carl', play: 'map-2' }],
+    expect: { winner: 'anne', trickBonus: 10 },
+  },
+  {
+    id: 'wild15-highest-under-the-whale',
+    card: 'wild15',
+    title: 'Sous la Baleine blanche, le 15 joker est le plus haut et remporte le pli, même sans couleur déclarée',
+    rule: 'Sous la Baleine blanche, le 15 joker est le plus haut et remporte le pli, même sans couleur déclarée',
+    spec: { rules: EXT, players: P4, hands: { anne: ['roger-5'], bob: ['wild15'], carl: ['whale'], dora: ['chest-14'] }, bids: { anne: 0, bob: 1, carl: 0, dora: 0 } },
+    steps: [{ by: 'anne', play: 'roger-5' }, { by: 'bob', play: 'wild15' }, { by: 'carl', play: 'whale' }, { by: 'dora', play: 'chest-14' }],
+    expect: { winner: 'bob', flags: { whale: true }, trickBonus: 10 },
+  },
+  {
+    id: 'wild15-lowest-loses-under-the-stingray',
+    card: 'wild15',
+    title: 'Sous la Raie tachetée, le 15 joker vaut 15 : c’est la plus haute valeur, donc il perd',
+    rule: 'Sous la Raie tachetée, le 15 joker vaut 15 : c’est la plus haute valeur, donc il perd',
+    spec: { rules: EXT, players: P4, hands: { anne: ['parrot-2'], bob: ['wild15'], carl: ['stingray'], dora: ['parrot-9'] }, bids: { anne: 1, bob: 0, carl: 0, dora: 0 } },
+    steps: [{ by: 'anne', play: 'parrot-2' }, { by: 'bob', play: 'wild15', as: 'parrot' }, { by: 'carl', play: 'stingray' }, { by: 'dora', play: 'parrot-9' }],
+    expect: { winner: 'anne', flags: { stingray: true }, trickBonus: 0 },
+  },
+  {
+    id: 'wild15-gives-no-bonus',
+    card: 'wild15',
+    title: 'Capturer le 15 joker ne rapporte rien, un vrai 14 dans le même pli rapporte 10',
+    rule: 'Capturer le 15 joker ne rapporte rien, un vrai 14 dans le même pli rapporte 10',
+    spec: { rules: EXT, players: P3, hands: { anne: ['map-14'], bob: ['wild15'], carl: ['pirate-helm'] }, bids: { anne: 0, bob: 0, carl: 1 } },
+    steps: [{ by: 'anne', play: 'map-14' }, { by: 'bob', play: 'wild15', as: 'map' }, { by: 'carl', play: 'pirate-helm' }],
+    expect: { winner: 'carl', trickBonus: 10, score: { carl: { base: 20, bonus: 10, total: 30 } } },
+  },
+  {
+    id: 'wild15-after-a-character-keeps-its-three-colours',
+    card: 'wild15',
+    title: 'Après un personnage, le 15 garde ses trois couleurs et peut sortir de la couleur de résolution',
+    rule: 'Après un personnage, le 15 garde ses trois couleurs et peut sortir de la couleur de résolution',
+    spec: { rules: EXT, players: P4, hands: { anne: ['plank'], bob: ['pirate-helm'], carl: ['chest-5'], dora: ['wild15'] }, bids: { anne: 0, bob: 0, carl: 1, dora: 0 } },
+    steps: [{ by: 'anne', play: 'plank' }, { by: 'bob', play: 'pirate-helm' }, { by: 'carl', play: 'chest-5' }, { by: 'dora', play: 'wild15', as: 'parrot' }],
+    expect: { winner: 'carl', removed: ['pirate-helm'], pending: null },
+  },
+  {
+    id: 'wild15-not-in-two-player-deck',
+    card: 'wild15',
+    title: 'À deux joueurs, le 15 joker n’est pas dans le paquet',
+    rule: 'À deux joueurs, le 15 joker n’est pas dans le paquet',
+    spec: { rules: EXT, players: ['anne', 'bob'], hands: { anne: ['parrot-2'], bob: ['parrot-3'] } },
+    expect: { deck: { lacks: ['wild15'], has: ['mate', 'volley', 'stingray', 'davy'] } },
+  },
+];

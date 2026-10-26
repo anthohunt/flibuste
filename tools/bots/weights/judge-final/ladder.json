@@ -1,0 +1,36 @@
+{
+  "command": "ladder",
+  "weights": "weights/champion.json",
+  "games": 80,
+  "seed": "judge-final",
+  "rounds": 6,
+  "workers": 30,
+  "ordered": true,
+  "pairs": [
+    {
+      "weak": "easy",
+      "strong": "normal",
+      "meanWeak": 51.44,
+      "meanStrong": 91.75,
+      "shareStrong": 0.6333,
+      "ok": true
+    },
+    {
+      "weak": "normal",
+      "strong": "hard",
+      "meanWeak": 85.31,
+      "meanStrong": 110.31,
+      "shareStrong": 0.5908,
+      "ok": true
+    },
+    {
+      "weak": "hard",
+      "strong": "ruthless",
+      "meanWeak": 91.88,
+      "meanStrong": 111.38,
+      "shareStrong": 0.5664,
+      "ok": true
+    }
+  ],
+  "ms": 34861
+}

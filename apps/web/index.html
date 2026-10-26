@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Le zoom reste libre (WCAG 1.4.4) : pas de `user-scalable=no` ; le double-tap est neutralisé par `touch-action`. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1d1108" />
+    <!-- Thème taverne unique : sombre, quel que soit le réglage du système. -->
+    <meta name="color-scheme" content="dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Flibuste Online" />
+    <link rel="icon" href="/brand/favicon-v1.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/brand/emblem-v1-64.png" />
+    <link rel="apple-touch-icon" href="/brand/emblem-v1-180.png" />
+    <!-- Les deux polices de l'écran d'accueil, préchargées (l'italique attend). -->
+    <link rel="preload" href="/fonts/pirata-one.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/alegreya.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- L'enseigne de la taverne est le plus gros élément peint de l'accueil : c'est elle que le navigateur
+         retient comme LCP. Sans cette ligne, elle n'est découverte qu'une fois le JS exécuté et le DOM construit
+         (c'est un `background-image` de `.sign-board`, dans la feuille de style) — soit 2 secondes trop tard sur
+         un réseau 3G. Préchargée ici, elle part avec le HTML (PERF-05). -->
+    <link rel="preload" href="/ui/sign-board.webp" as="image" type="image/webp" fetchpriority="high" />
+    <title>Flibuste Online</title>
+    <meta name="description" content="Jeu de cartes pirate, en solo ou entre amis. Jeu libre et gratuit." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Flibuste Online" />
+    <meta property="og:description" content="Jeu de cartes pirate, en solo ou entre amis. Jeu libre et gratuit." />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Flibuste Online — emblème doré d’un voilier" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Flibuste Online" />
+    <!-- ------------------------------------------------------------------------------------------------
+         COQUILLE STATIQUE (PERF-01) — la taverne avant le JavaScript.
+         Avant : le HTML servi faisait 1 894 octets sans un mot ni un indicateur ; l'écran restait peint à la
+         couleur de marque, muet, 2,4 s en Fast 3G et 8,3 s en Slow 3G — le temps que le bundle descende ET
+         s'exécute, puisque c'est LUI qui produisait le premier pixel de contenu.
+         Après : l'enseigne et la phrase d'attente sont écrites ici, avec leur CSS critique. Elles se peignent
+         à l'arrivée du HTML, sans attendre ni la feuille de style, ni les polices, ni le bundle.
+         Trois règles que cette coquille s'impose, et qu'il ne faut pas défaire :
+          1. `position: fixed` — elle est HORS DU FLUX. Sa disparition ne peut décaler aucun élément (CLS 0).
+          2. aucune police distante — Georgia, tout de suite. Une police chargée après coup change la largeur
+             du texte, donc décale, donc coûte du CLS : c'est précisément ce qu'on ne veut pas.
+          3. aucune image — la planche et les cordes sont des dégradés. Zéro octet, zéro requête.
+         Elle est retirée par `src/main.ts`, une fois Svelte monté ET la feuille de style appliquée : jamais de
+         clignotement d'écran non habillé entre les deux.
+         ------------------------------------------------------------------------------------------------ -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #1d1108;
+      }
+      #boot {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.4rem;
+        padding: 1rem;
+        background:
+          radial-gradient(120% 70% at 50% 36%, rgba(255, 170, 70, 0.14), transparent 62%),
+          #1d1108;
+        /* Corps ET interligne fixés ici : `app.css` arrive après (chargement non bloquant) et changerait sinon
+           la hauteur de la ligne d'attente — 3 px de recentrage, soit 0,00006 de CLS. Mesuré, puis supprimé. */
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 1rem;
+        line-height: 1.35;
+        transition: opacity 0.28s ease-out;
+      }
+      #boot[data-done] {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .boot-sign {
+        position: relative;
+        width: min(78vw, 19rem);
+        padding-top: 52px;
+      }
+      .boot-rope {
+        position: absolute;
+        top: 0;
+        width: 6px;
+        height: 62px;
+        margin-left: -3px;
+        border-radius: 3px;
+        background: repeating-linear-gradient(-55deg, #d2b276 0 3px, #8a6836 3px 6px, #b28f4e 6px 8px);
+        box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.55);
+      }
+      .boot-rope-l {
+        left: 24.5%;
+      }
+      .boot-rope-r {
+        left: 75.5%;
+      }
+      .boot-plank {
+        display: grid;
+        place-items: center;
+        aspect-ratio: 915 / 494;
+        border-radius: 12px;
+        border: 3px solid #21140a;
+        background: linear-gradient(180deg, #5a3619 0%, #3f2612 46%, #2c1a0c 100%);
+        box-shadow:
+          inset 0 2px 0 rgba(255, 214, 150, 0.18),
+          inset 0 -4px 10px rgba(0, 0, 0, 0.6),
+          0 14px 22px rgba(0, 0, 0, 0.6);
+      }
+      .boot-title {
+        white-space: nowrap;
+        font-size: clamp(2.2rem, 11.5vw, 3.2rem);
+        line-height: 1;
+        letter-spacing: 0.03em;
+        color: #f1c95a;
+        text-shadow:
+          0 2px 0 #3a230a,
+          0 4px 6px rgba(0, 0, 0, 0.7);
+      }
+      .boot-line {
+        margin: 0;
+        font-style: italic;
+        font-size: 1rem;
+        color: #e5d2a6;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+      }
+      .boot-dots {
+        display: inline-block;
+        width: 1.1em;
+        animation: boot-dots 1.4s ease-in-out infinite;
+      }
+      @keyframes boot-dots {
+        0%,
+        100% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #boot {
+          transition: none;
+        }
+        .boot-dots {
+          animation: none;
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <div style="max-width: 32rem; margin: 4rem auto; padding: 1.5rem; font-family: Georgia, serif; color: #f3e6c8; text-align: center">
+        <h1 style="font-size: 2rem; margin: 0 0 0.5rem">Flibuste</h1>
+        <p>Flibuste a besoin de JavaScript. Active-le dans ton navigateur, puis recharge la page.</p>
+      </div>
+    </noscript>
+    <div id="app"></div>
+    <!-- La coquille : ce que l'on voit pendant que le reste arrive. Retirée par `src/main.ts` (PERF-01). -->
+    <div id="boot">
+      <div class="boot-sign">
+        <i class="boot-rope boot-rope-l"></i>
+        <i class="boot-rope boot-rope-r"></i>
+        <div class="boot-plank"><span class="boot-title">Flibuste</span></div>
+      </div>
+      <p class="boot-line">On prépare la taverne<span class="boot-dots">…</span></p>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

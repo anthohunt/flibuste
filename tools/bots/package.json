@@ -1,0 +1,15 @@
+{
+  "name": "@flibuste/arena",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@flibuste/bots": "workspace:*",
+    "@flibuste/engine": "workspace:*"
+  }
+}
