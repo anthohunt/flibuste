@@ -1,0 +1,1008 @@
+{
+  "version": 1,
+  "music": {
+    "chosen": "taverne",
+    "variants": [
+      "taverne",
+      "festin",
+      "large",
+      "feu"
+    ],
+    "gain": 0,
+    "menus": "taverne"
+  },
+  "sfx": {
+    "defaite-moi": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": false,
+      "gain": -3
+    },
+    "pari-atteint": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 300,
+      "detune": false,
+      "gain": -6
+    },
+    "pari-modifie": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": false,
+      "gain": 0
+    },
+    "regle-en-sommeil": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "rare",
+      "throttle": 60,
+      "detune": true,
+      "gain": -4
+    },
+    "table-reglee-au-loin": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P2",
+      "frequence": "moyenne",
+      "throttle": 600,
+      "detune": true,
+      "gain": -6
+    },
+    "notification-tranchee": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P2",
+      "frequence": "basse",
+      "throttle": 0,
+      "detune": false,
+      "gain": -3
+    },
+    "donne-manche": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 300,
+      "detune": false,
+      "gain": -1
+    },
+    "carte-levee": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "tres-haute",
+      "throttle": 40,
+      "detune": true,
+      "gain": -5
+    },
+    "carte-posee-moi": {
+      "chosen": "v4",
+      "variants": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "tres-haute",
+      "throttle": 60,
+      "detune": true,
+      "gain": -1
+    },
+    "carte-posee-autre": {
+      "chosen": "v4",
+      "variants": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "tres-haute",
+      "throttle": 60,
+      "detune": true,
+      "gain": -4
+    },
+    "carte-agrandie": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 300,
+      "detune": true,
+      "gain": -2
+    },
+    "carte-passee": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": false,
+      "gain": -1
+    },
+    "mon-tour": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "tres-haute",
+      "throttle": 250,
+      "detune": true,
+      "gain": 0
+    },
+    "pari-pose": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 150,
+      "detune": false,
+      "gain": -2
+    },
+    "paris-devoiles": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 300,
+      "detune": false,
+      "gain": 0
+    },
+    "pli-gagne-moi": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "tres-haute",
+      "throttle": 200,
+      "detune": true,
+      "gain": -1
+    },
+    "pli-gagne-autre": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "tres-haute",
+      "throttle": 200,
+      "detune": true,
+      "gain": -5
+    },
+    "regle-allumee": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "tres-haute",
+      "throttle": 60,
+      "detune": true,
+      "gain": -3
+    },
+    "regle-eteinte": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "tres-haute",
+      "throttle": 60,
+      "detune": true,
+      "gain": -4
+    },
+    "cran-de-reglage": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 60,
+      "detune": true,
+      "gain": -8
+    },
+    "plan-de-table": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 300,
+      "detune": false,
+      "gain": -2
+    },
+    "lien-copie": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 300,
+      "detune": true,
+      "gain": -3
+    },
+    "table-ouverte": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 300,
+      "detune": false,
+      "gain": 0
+    },
+    "victoire-moi": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": false,
+      "gain": 0
+    },
+    "enseigne-oscille": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 900,
+      "detune": true,
+      "gain": -3
+    },
+    "refus-droit": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 500,
+      "detune": true,
+      "gain": -3
+    },
+    "geste-sans-effet": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "basse",
+      "throttle": 400,
+      "detune": true,
+      "gain": -5
+    },
+    "table-refusee": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 250,
+      "detune": false,
+      "gain": 0
+    },
+    "main-lachee": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "basse",
+      "throttle": 1700,
+      "detune": false,
+      "gain": 0
+    },
+    "lame-tiree": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P1",
+      "frequence": "haute",
+      "throttle": 80,
+      "detune": true,
+      "gain": -3
+    },
+    "fuite": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P1",
+      "frequence": "haute",
+      "throttle": 80,
+      "detune": true,
+      "gain": -3
+    },
+    "capitanat-recu": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "basse",
+      "throttle": 0,
+      "detune": false,
+      "gain": -2
+    },
+    "siege-en-auto": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P2",
+      "frequence": "moyenne",
+      "throttle": 200,
+      "detune": true,
+      "gain": -8
+    },
+    "salve-rouverte": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P2",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": false,
+      "gain": -5
+    },
+    "leviathan-en-jeu": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "rare",
+      "throttle": 2000,
+      "detune": false,
+      "gain": -6
+    },
+    "pli-englouti": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "basse",
+      "throttle": 2900,
+      "detune": false,
+      "gain": 0
+    },
+    "panneau-ouvre": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "tres-haute",
+      "throttle": 150,
+      "detune": true,
+      "gain": -3
+    },
+    "panneau-ferme": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 150,
+      "detune": true,
+      "gain": -12
+    },
+    "panneau-ecarte": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "moyenne",
+      "throttle": 200,
+      "detune": false,
+      "gain": -12
+    },
+    "page-tournee": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P1",
+      "frequence": "haute",
+      "throttle": 120,
+      "detune": true,
+      "gain": -7
+    },
+    "score-ouvre": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 300,
+      "detune": false,
+      "gain": -4
+    },
+    "pari-tenu-inscrit": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 60,
+      "detune": true,
+      "gain": -2
+    },
+    "pari-rate-inscrit": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 60,
+      "detune": true,
+      "gain": -10
+    },
+    "sceau-bonus": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "moyenne",
+      "throttle": 40,
+      "detune": true,
+      "gain": -9
+    },
+    "pari-zero-inscrit": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 300,
+      "detune": true,
+      "gain": 0
+    },
+    "main-piochee": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": true,
+      "gain": -6
+    },
+    "pouvoir-suivant": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P2",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": true,
+      "gain": -5
+    },
+    "quinze-devalue": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P2",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": false,
+      "gain": -1
+    },
+    "roi-flibustiers": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "basse",
+      "throttle": 0,
+      "detune": false,
+      "gain": 0
+    },
+    "sirene-capture": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": false,
+      "gain": 0
+    },
+    "tempete": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": false,
+      "gain": -2
+    },
+    "liaison-perdue": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 3000,
+      "detune": false,
+      "gain": -2
+    },
+    "liaison-revenue": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 3000,
+      "detune": false,
+      "gain": -3
+    },
+    "serveur-muet": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "basse",
+      "throttle": 8000,
+      "detune": false,
+      "gain": -2
+    },
+    "chrono-urgence": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 800,
+      "detune": true,
+      "gain": -9
+    },
+    "pari-depasse": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 250,
+      "detune": true,
+      "gain": -5
+    },
+    "bouton-presse": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "tres-haute",
+      "throttle": 60,
+      "detune": true,
+      "gain": -8
+    },
+    "refus-regle": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 250,
+      "detune": true,
+      "gain": -5
+    },
+    "bot-assis": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 200,
+      "detune": true,
+      "gain": -5
+    },
+    "bot-retire": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 60,
+      "detune": true,
+      "gain": -6
+    },
+    "bot-niveau-choisi": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P0",
+      "frequence": "haute",
+      "throttle": 150,
+      "detune": true,
+      "gain": -2
+    },
+    "verdict-passe": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": true,
+      "priorite": "P1",
+      "frequence": "haute",
+      "throttle": 150,
+      "detune": true,
+      "gain": 0
+    },
+    "siege-saute": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P2",
+      "frequence": "rare",
+      "throttle": 0,
+      "detune": false,
+      "gain": -10
+    },
+    "partie-lancee": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 300,
+      "detune": false,
+      "gain": 0
+    },
+    "partie-reprise": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "basse",
+      "throttle": 300,
+      "detune": false,
+      "gain": -3
+    },
+    "table-quittee": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 200,
+      "detune": false,
+      "gain": -3
+    },
+    "joueur-arrive": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 250,
+      "detune": true,
+      "gain": -4
+    },
+    "joueur-parti": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P0",
+      "frequence": "moyenne",
+      "throttle": 300,
+      "detune": true,
+      "gain": -4
+    },
+    "butin-alliance": {
+      "chosen": "v1",
+      "variants": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "rare",
+      "throttle": 250,
+      "detune": false,
+      "gain": -4
+    },
+    "kraken-pose": {
+      "chosen": "v1",
+      "variants": [
+        "v1"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "basse",
+      "throttle": 80,
+      "detune": false,
+      "gain": -6
+    },
+    "baleine-pose": {
+      "chosen": "v1",
+      "variants": [
+        "v1"
+      ],
+      "precharge": false,
+      "priorite": "P1",
+      "frequence": "basse",
+      "throttle": 80,
+      "detune": false,
+      "gain": -6
+    }
+  }
+}

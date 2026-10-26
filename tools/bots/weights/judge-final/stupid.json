@@ -1,0 +1,25 @@
+{
+  "command": "stupid",
+  "weights": "weights/champion.json",
+  "decisions": 1000,
+  "poses": 1540,
+  "games": 7,
+  "seed": "judge-final",
+  "samples": 16,
+  "profile": "ruthless",
+  "rules": "classic",
+  "workers": 30,
+  "total": 0,
+  "byKind": {
+    "gift": 0,
+    "uselessTake": 0,
+    "skUnderMermaid": 0
+  },
+  "byKindLeading": {
+    "gift": 0,
+    "uselessTake": 0,
+    "skUnderMermaid": 0
+  },
+  "examples": [],
+  "ms": 9843
+}

@@ -1,0 +1,325 @@
+// Situations « tigress » : cas d'école posés comme de mini-parties, avec le résultat que le moteur doit produire.
+// Les attendus décrivent les règles de Flibuste (voir docs/REGLES.md), écrites pour ce projet.
+import type { Situation } from './types';
+
+const P3 = ['anne', 'bob', 'carl'];
+const P4 = ['anne', 'bob', 'carl', 'dora'];
+
+export const TIGRESS: Situation[] = [
+  {
+    id: 'tigress-declaration-is-required',
+    card: 'tigress',
+    title: 'Poser la Tigresse sans déclarer son rôle est refusé',
+    rule: 'Poser la Tigresse sans déclarer son rôle est refusé',
+    spec: {
+      players: P3,
+      hands: { anne: ['tigress'], bob: ['parrot-2'], carl: ['parrot-3'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+    },
+    steps: [{ by: 'anne', play: 'tigress', illegal: 'bad-value' }],
+    expect: { toAct: 'anne', phase: 'playing' },
+  },
+  {
+    id: 'tigress-declaration-must-be-pirate-or-escape',
+    card: 'tigress',
+    title: 'La Tigresse ne se déclare que « pirate » ou « fuite »',
+    rule: 'La Tigresse ne se déclare que « pirate » ou « fuite »',
+    spec: {
+      players: P3,
+      hands: { anne: ['tigress'], bob: ['parrot-2'], carl: ['parrot-3'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+    },
+    expect: { cannot: { player: 'anne', card: 'tigress', as: 0, reason: 'bad-value' } },
+  },
+  {
+    id: 'tigress-as-pirate-beats-black-14',
+    card: 'tigress',
+    title: 'En pirate, la Tigresse bat toutes les cartes de couleur, 14 noir compris',
+    rule: 'En pirate, la Tigresse bat toutes les cartes de couleur, 14 noir compris',
+    spec: {
+      players: P3,
+      hands: { anne: ['roger-14'], bob: ['tigress'], carl: ['roger-13'] },
+      bids: { anne: 0, bob: 1, carl: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'roger-14' },
+      { by: 'bob', play: 'tigress', as: 'pirate' },
+      { by: 'carl', play: 'roger-13' },
+    ],
+    expect: { winner: 'bob', phase: 'roundEnd', trickBonus: 20, score: { bob: { base: 20, bonus: 20, total: 40 } } },
+  },
+  {
+    id: 'tigress-as-pirate-played-first-beats-pirate',
+    card: 'tigress',
+    title: 'Tigresse-pirate jouée avant un pirate : elle remporte le pli',
+    rule: 'Tigresse-pirate jouée avant un pirate : elle remporte le pli',
+    spec: {
+      players: P3,
+      hands: { anne: ['tigress'], bob: ['pirate-helm'], carl: ['parrot-2'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'tigress', as: 'pirate' },
+      { by: 'bob', play: 'pirate-helm' },
+      { by: 'carl', play: 'parrot-2' },
+    ],
+    expect: { winner: 'anne', tricksWon: { anne: 1, bob: 0 } },
+  },
+  {
+    id: 'tigress-as-pirate-played-second-loses',
+    card: 'tigress',
+    title: 'Tigresse-pirate jouée après un pirate : le pirate garde le pli',
+    rule: 'Tigresse-pirate jouée après un pirate : le pirate garde le pli',
+    spec: {
+      players: P3,
+      hands: { anne: ['pirate-helm'], bob: ['tigress'], carl: ['parrot-2'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'pirate-helm' },
+      { by: 'bob', play: 'tigress', as: 'pirate' },
+      { by: 'carl', play: 'parrot-2' },
+    ],
+    expect: { winner: 'anne', tricksWon: { anne: 1, bob: 0 } },
+  },
+  {
+    id: 'tigress-as-pirate-captures-mermaid',
+    card: 'tigress',
+    title: 'En pirate, la Tigresse bat la sirène et empoche +20',
+    rule: 'En pirate, la Tigresse bat la sirène et empoche +20',
+    spec: {
+      players: P3,
+      hands: { anne: ['tigress'], bob: ['mermaid-1'], carl: ['parrot-2'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'tigress', as: 'pirate' },
+      { by: 'bob', play: 'mermaid-1' },
+      { by: 'carl', play: 'parrot-2' },
+    ],
+    expect: { winner: 'anne', trickBonus: 20, score: { anne: { base: 20, bonus: 20, total: 40 } } },
+  },
+  {
+    id: 'tigress-as-pirate-beaten-by-roi-flibustiers',
+    card: 'tigress',
+    title: 'En pirate, la Tigresse est battue par le Roi des Flibustiers, qui empoche +30',
+    rule: 'En pirate, la Tigresse est battue par le Roi des Flibustiers, qui empoche +30',
+    spec: {
+      players: P3,
+      hands: { anne: ['tigress'], bob: ['pirateking'], carl: ['parrot-2'] },
+      bids: { anne: 0, bob: 1, carl: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'tigress', as: 'pirate' },
+      { by: 'bob', play: 'pirateking' },
+      { by: 'carl', play: 'parrot-2' },
+    ],
+    expect: { winner: 'bob', trickBonus: 30, score: { bob: { base: 20, bonus: 30, total: 50 } } },
+  },
+  {
+    id: 'tigress-as-escape-loses-to-numbers',
+    card: 'tigress',
+    title: 'En fuite, la Tigresse perd contre les cartes numérotées',
+    rule: 'En fuite, la Tigresse perd contre les cartes numérotées',
+    spec: {
+      players: P3,
+      hands: { anne: ['parrot-5'], bob: ['tigress'], carl: ['parrot-2'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'parrot-5' },
+      { by: 'bob', play: 'tigress', as: 'escape' },
+      { by: 'carl', play: 'parrot-2' },
+    ],
+    expect: { winner: 'anne', tricksWon: { anne: 1, bob: 0, carl: 0 } },
+  },
+  {
+    id: 'tigress-as-escape-first-escape-wins',
+    card: 'tigress',
+    title: 'Pli entièrement en fuites : la Tigresse-fuite jouée en premier remporte le pli',
+    rule: 'Pli entièrement en fuites : la Tigresse-fuite jouée en premier remporte le pli',
+    spec: {
+      players: P3,
+      hands: { anne: ['tigress'], bob: ['escape-1'], carl: ['escape-2'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'tigress', as: 'escape' },
+      { by: 'bob', play: 'escape-1' },
+      { by: 'carl', play: 'escape-2' },
+    ],
+    expect: { winner: 'anne', trickBonus: 0, score: { anne: { base: 20, bonus: 0, total: 20 } } },
+  },
+  {
+    id: 'tigress-as-escape-second-escape-loses',
+    card: 'tigress',
+    title: 'Pli entièrement en fuites : la Tigresse-fuite jouée en second ne gagne pas',
+    rule: 'Pli entièrement en fuites : la Tigresse-fuite jouée en second ne gagne pas',
+    spec: {
+      players: P3,
+      hands: { anne: ['escape-1'], bob: ['tigress'], carl: ['escape-2'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'escape-1' },
+      { by: 'bob', play: 'tigress', as: 'escape' },
+      { by: 'carl', play: 'escape-2' },
+    ],
+    expect: { winner: 'anne', tricksWon: { anne: 1, bob: 0, carl: 0 } },
+  },
+  {
+    id: 'tigress-as-escape-with-loot-first-wins',
+    card: 'tigress',
+    title: 'Tigresse-fuite en tête devant un Butin : la première carte jouée remporte le pli',
+    rule: 'Tigresse-fuite en tête devant un Butin : la première carte jouée remporte le pli',
+    spec: {
+      players: P3,
+      hands: { anne: ['tigress'], bob: ['loot-1'], carl: ['escape-1'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'tigress', as: 'escape' },
+      { by: 'bob', play: 'loot-1' },
+      { by: 'carl', play: 'escape-1' },
+    ],
+    expect: { winner: 'anne', lootAlliances: [['bob', 'anne']] },
+  },
+  {
+    id: 'tigress-as-pirate-lead-no-suit',
+    card: 'tigress',
+    title: 'Tigresse-pirate en tête : aucune couleur à suivre pour le pli',
+    rule: 'Tigresse-pirate en tête : aucune couleur à suivre pour le pli',
+    spec: {
+      players: P3,
+      hands: { anne: ['map-2'], bob: ['parrot-9', 'map-3'], carl: ['chest-3', 'chest-4'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+      trick: { leader: 'anne', plays: [{ player: 'anne', card: 'tigress', as: 'pirate' }] },
+    },
+    expect: { toAct: 'bob', legal: { player: 'bob', cards: ['parrot-9', 'map-3'] } },
+  },
+  {
+    id: 'tigress-as-escape-lead-defers-suit',
+    card: 'tigress',
+    title: 'Tigresse-fuite en tête : le joueur suivant pose ce qu’il veut',
+    rule: 'Tigresse-fuite en tête : le joueur suivant pose ce qu’il veut',
+    spec: {
+      players: P3,
+      hands: { anne: ['map-2'], bob: ['parrot-9', 'map-3'], carl: ['map-1', 'chest-4'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+      trick: { leader: 'anne', plays: [{ player: 'anne', card: 'tigress', as: 'escape' }] },
+    },
+    expect: { toAct: 'bob', legal: { player: 'bob', cards: ['parrot-9', 'map-3'] } },
+  },
+  {
+    id: 'tigress-as-escape-lead-suit-set-by-next',
+    card: 'tigress',
+    title: 'Tigresse-fuite en tête : la couleur posée par le joueur suivant doit être suivie',
+    rule: 'Tigresse-fuite en tête : la couleur posée par le joueur suivant doit être suivie',
+    spec: {
+      players: P3,
+      hands: { anne: ['map-2'], bob: ['parrot-9', 'map-3'], carl: ['map-1', 'chest-4'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+      trick: { leader: 'anne', plays: [{ player: 'anne', card: 'tigress', as: 'escape' }] },
+    },
+    steps: [{ by: 'bob', play: 'map-3' }],
+    expect: {
+      toAct: 'carl',
+      legal: { player: 'carl', cards: ['map-1'] },
+      cannot: { player: 'carl', card: 'chest-4', reason: 'must-follow-suit' },
+    },
+  },
+  {
+    id: 'tigress-as-escape-lead-defers-again',
+    card: 'tigress',
+    title: 'Tigresse-fuite puis fuite : le choix de la couleur passe au troisième joueur',
+    rule: 'Tigresse-fuite puis fuite : le choix de la couleur passe au troisième joueur',
+    spec: {
+      players: P4,
+      hands: { anne: ['map-2'], bob: ['chest-7'], carl: ['parrot-9', 'map-3'], dora: ['parrot-4', 'chest-4'] },
+      bids: { anne: 1, bob: 0, carl: 0, dora: 0 },
+      trick: {
+        leader: 'anne',
+        plays: [
+          { player: 'anne', card: 'tigress', as: 'escape' },
+          { player: 'bob', card: 'escape-1' },
+        ],
+      },
+    },
+    expect: { toAct: 'carl', legal: { player: 'carl', cards: ['parrot-9', 'map-3'] } },
+  },
+  {
+    id: 'tigress-as-pirate-has-no-pirate-power',
+    card: 'tigress',
+    title: "La Tigresse jouée en pirate ne déclenche aucun pouvoir de pirate",
+    rule: "La Tigresse jouée en pirate ne déclenche aucun pouvoir de pirate",
+    spec: {
+      players: P3,
+      hands: { anne: ['tigress', 'map-2'], bob: ['parrot-9', 'parrot-8'], carl: ['chest-3', 'chest-4'] },
+      bids: { anne: 1, bob: 0, carl: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'tigress', as: 'pirate' },
+      { by: 'bob', play: 'parrot-9' },
+      { by: 'carl', play: 'chest-3' },
+    ],
+    expect: { winner: 'anne', pending: null, phase: 'playing', nextLeader: 'anne', toAct: 'anne' },
+  },
+  {
+    id: 'tigress-playable-holding-led-suit',
+    card: 'tigress',
+    title: "La Tigresse reste jouable même quand on a la couleur demandée",
+    rule: "La Tigresse reste jouable même quand on a la couleur demandée",
+    spec: {
+      players: P3,
+      hands: { anne: ['map-2'], bob: ['parrot-9', 'tigress'], carl: ['chest-3', 'chest-4'] },
+      bids: { anne: 1, bob: 1, carl: 0 },
+      trick: { leader: 'anne', plays: [{ player: 'anne', card: 'parrot-5' }] },
+    },
+    expect: { toAct: 'bob', legal: { player: 'bob', cards: ['parrot-9', 'tigress'] } },
+  },
+  {
+    id: 'tigress-as-pirate-under-whale-destroyed',
+    card: 'tigress',
+    title: 'Sous la Baleine blanche, la Tigresse-pirate est détruite comme un personnage',
+    rule: 'Sous la Baleine blanche, la Tigresse-pirate est détruite comme un personnage',
+    spec: {
+      players: P4,
+      hands: { anne: ['tigress'], bob: ['parrot-3'], carl: ['chest-9'], dora: ['whale'] },
+      bids: { anne: 0, bob: 0, carl: 1, dora: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'tigress', as: 'pirate' },
+      { by: 'bob', play: 'parrot-3' },
+      { by: 'carl', play: 'chest-9' },
+      { by: 'dora', play: 'whale' },
+    ],
+    expect: { winner: 'carl', flags: { whale: true }, trickBonus: 0, tricksWon: { anne: 0, carl: 1 } },
+  },
+  {
+    id: 'tigress-ghost-always-escape',
+    card: 'tigress',
+    title: 'À deux joueurs, la Tigresse de Vieux Loup est toujours une fuite',
+    rule: 'À deux joueurs, la Tigresse de Vieux Loup est toujours une fuite',
+    spec: {
+      players: ['anne', 'bob'],
+      hands: { anne: ['parrot-5'], bob: ['parrot-3'], ghost: ['tigress'] },
+      bids: { anne: 1, bob: 0 },
+    },
+    steps: [
+      { by: 'anne', play: 'parrot-5' },
+      { by: 'bob', play: 'parrot-3' },
+    ],
+    expect: { winner: 'anne', tricksWon: { anne: 1, bob: 0 }, score: { anne: { base: 20, total: 20 } } },
+  },
+  {
+    id: 'tigress-single-copy-in-deck',
+    card: 'tigress',
+    title: 'Le paquet contient une seule Tigresse',
+    rule: 'Le paquet contient une seule Tigresse',
+    spec: {
+      players: P3,
+      hands: { anne: ['parrot-2'], bob: ['parrot-3'], carl: ['parrot-4'] },
+    },
+    expect: { deck: { has: ['tigress'] } },
+  },
+];

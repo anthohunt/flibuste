@@ -1,0 +1,20 @@
+{
+  "command": "duel",
+  "a": "weights/champion.json",
+  "b": "legacy",
+  "games": 200,
+  "seed": "judge-final",
+  "samples": 16,
+  "profile": "ruthless",
+  "rules": "classic",
+  "workers": 30,
+  "meanA": 184.4,
+  "meanB": 109.55,
+  "shareA": 0.6189,
+  "shareAPerGame": 0.6193,
+  "winRateA": 0.6525,
+  "decisions": 55970,
+  "ms": 89086,
+  "msPerGameWall": 445.43,
+  "msPerGameCpu": 12823.13
+}

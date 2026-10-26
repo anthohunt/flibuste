@@ -1,0 +1,23 @@
+{
+ "coup": 0.512589928057554,
+ "meta": {
+  "versionEncodage": 1,
+  "taillePari": 92,
+  "tailleCoup": 260,
+  "tailleVocabulaire": 83,
+  "lignesPari": 2650,
+  "lignesCoup": 10220,
+  "parties": 57,
+  "niveauImite": "ruthless",
+  "regles": "full",
+  "joueurs": [
+   3,
+   6
+  ],
+  "echantillons": 128,
+  "graine": "nuit1",
+  "secondes": 17482
+ },
+ "secondes": 10,
+ "appareil": "cuda"
+}

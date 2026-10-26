@@ -1,0 +1,15 @@
+node_modules/
+dist/
+data/
+.env
+*.log
+*.db
+*.db-*
+vapid.json
+tools/nn/donnees/
+tools/bots/dist/
+tools/nn/dist/
+apps/web/playwright-report/
+apps/web/test-results/
+RAPPORT-PREPARATION.md
+outputs/
