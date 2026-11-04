@@ -1,4 +1,6 @@
-# Règles de Flibuste
+# Flibuste rules
+
+> This document is in French.
 
 Texte écrit pour ce projet (licence CC BY 4.0). Flibuste est un jeu de **plis à annonces** : chaque manche,
 on annonce combien de plis on va remporter, puis on joue pour atteindre exactement ce nombre. Cette mécanique

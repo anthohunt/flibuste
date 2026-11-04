@@ -1,21 +1,21 @@
-# Crédits et licences tierces
+# Credits and third-party licenses
 
 ## Code
-• Code de Flibuste : Apache 2.0 (`LICENSE`). Textes, schémas et documents : CC BY 4.0 (`LICENSE-docs`).
-• Dépendances (installées par `pnpm`, non recopiées) : Svelte, Vite, Tailwind CSS, vite-plugin-pwa et Workbox, ws, qrcode,
-  Vitest (MIT) ; better-sqlite3 (MIT) ; web-push (MPL-2.0) ; Playwright et sharp (Apache 2.0).
+- Flibuste code: Apache 2.0 (`LICENSE`). Text, diagrams and documents: CC BY 4.0 (`LICENSE-docs`).
+- Dependencies (installed by `pnpm`, not copied): Svelte, Vite, Tailwind CSS, vite-plugin-pwa and Workbox, ws, qrcode,
+  Vitest (MIT); better-sqlite3 (MIT); web-push (MPL-2.0); Playwright and sharp (Apache 2.0).
 
-## Polices (SIL Open Font License 1.1, textes dans `licences/`)
-• **Alegreya** (Huerta Tipográfica) : `apps/web/public/fonts/alegreya*.woff2`.
-• **Pirata One** (Rodrigo Fuenzalida, Nicolas Massi) : `apps/web/public/fonts/pirata-one.woff2`.
+## Fonts (SIL Open Font License 1.1, texts in `licences/`)
+- **Alegreya** (Huerta Tipográfica): `apps/web/public/fonts/alegreya*.woff2`.
+- **Pirata One** (Rodrigo Fuenzalida, Nicolas Massi): `apps/web/public/fonts/pirata-one.woff2`.
 
-## Sons et musiques
-Tous en CC0 (domaine public). Le détail fichier par fichier (titre, auteur, source) est dans
-`apps/web/public/audio/credits.json` : Kenney (kenney.nl), OpenGameArt (dont randommind et nbjdlukasabsolute pour la
-musique), Freesound. Aucune attribution n'est exigée ; elle est donnée par courtoisie.
+## Sounds and music
+All CC0 (public domain). The file-by-file detail (title, author, source) is in
+`apps/web/public/audio/credits.json`: Kenney (kenney.nl), OpenGameArt (including randommind and nbjdlukasabsolute for the
+music), Freesound. No attribution is required; it is given as a courtesy.
 
 ## Images
-• Cartes, emblème et image de partage : dessinés pour ce projet par script (`tools/art/generate-cards.mjs`,
-  `apps/web/art-source/emblem.svg`, `apps/web/scripts/gen-icons.mjs`) ; CC BY 4.0.
-• Textures et décors de `apps/web/public/ui/` : textures et décors produits avec un modèle d'image, puis retouchés,
-  et objets de table rendus avec Blender ; aucune image tierce ; publiés par l'auteur sous CC BY 4.0.
+- Cards, emblem and share image: drawn for this project by script (`tools/art/generate-cards.mjs`,
+  `apps/web/art-source/emblem.svg`, `apps/web/scripts/gen-icons.mjs`); CC BY 4.0.
+- Textures and backgrounds in `apps/web/public/ui/`: textures and backgrounds produced with an image model, then
+  retouched, and table objects rendered with Blender; no third-party image; published by the author under CC BY 4.0.
