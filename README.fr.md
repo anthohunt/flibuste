@@ -1,5 +1,7 @@
 [English](README.md) · **Français**
 
+**Anthony Hunt** · [Fiche du projet sur ingevision.cloud](https://ingevision.cloud/?p=flibuste) · [LinkedIn](https://www.linkedin.com/in/anthony-hunt-3948a9196) · [Profil GitHub](https://github.com/anthohunt)
+
 # Flibuste
 
 Jeu de cartes de plis à annonces, sur téléphone (PWA) : seul contre des bots, ou en ligne entre amis avec un code de salle.
