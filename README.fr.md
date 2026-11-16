@@ -2,7 +2,7 @@
 
 # Flibuste
 
-**Un jeu de cartes de plis à annonces, sur téléphone.** Seul contre des bots, sans réseau, ou en ligne entre amis qui rejoignent par un code de salle.
+**Un jeu de cartes de plis à annonces, sur téléphone.**
 
 [![Deux téléphones dans la même partie en ligne : l'un crée la table, l'autre la rejoint par le code, puis tous deux annoncent et jouent (cliquer pour la vidéo complète)](docs/demo.gif)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view)
 
@@ -11,22 +11,22 @@
 ## Utilisation
 
 - **Solo.** Contre des bots de quatre niveaux (Facile, Normal, Difficile, Impitoyable) ou un profil sur mesure ; sans réseau.
-- **Entre amis.** L'hôte crée une table et partage un code de six lettres ; de 2 à 8 joueurs, des bots peuvent compléter la table.
-- **Rythme.** Un temps limité par tour, ou sans limite ; en mode « Au fil de l'eau », chacun joue quand il peut et reçoit une notification à son tour.
-- **Reprise.** Un téléphone fermé ou un serveur redémarré ne met pas fin à la partie : le serveur la rejoue depuis son journal de coups.
-- **Installation.** Appli web installable, avec le son ; les règles sont dans [`docs/REGLES.md`](docs/REGLES.md).
+- **Entre amis.** L'hôte crée une table et partage un code de six lettres ; de 2 à 8 joueurs (9 avec les numéros bonus) ; des bots peuvent compléter la table.
+- **Rythme.** 30 s ou 2 min par tour, sans limite, ou « Au fil de l'eau » : chacun joue quand il peut et reçoit une notification à son tour.
+- **Reprise.** Un téléphone fermé retrouve sa place ; après un redémarrage, le serveur rejoue la partie depuis son journal de coups.
+- **Installation.** Appli web à ajouter à l'écran d'accueil, avec le son ; règles dans [`docs/REGLES.md`](docs/REGLES.md).
 
 ## Architecture
 
-![Architecture de Flibuste : l'appli du téléphone envoie les coups aux salles de jeu par WebSocket ; le moteur de règles les vérifie, les bots jouent leur tour par recherche Monte-Carlo, SQLite note chaque coup, et la table repart vers chaque joueur](docs/architecture.svg)
+![Architecture de Flibuste : l'appli du téléphone envoie les coups aux salles de jeu par WebSocket ; le moteur de règles les vérifie, les bots choisissent leurs coups (règles ou recherche Monte-Carlo), SQLite note chaque coup, et la table repart vers chaque joueur](docs/architecture.svg)
 
 ## Lancer
 
-- **État.** Pas en ligne pour le moment ; tourne partout avec Docker ou Node.js 22.
+- **État.** Pas en ligne pour le moment ; se lance en local avec Docker ou Node.js 22.
 - **Docker.** `docker build -t flibuste . && docker run -p 8787:8787 -v flibuste-data:/data flibuste`, puis http://localhost:8787.
-- **Node.js.** `corepack enable && pnpm install`, `pnpm --filter @flibuste/web build`, puis `WEB_DIST=apps/web/dist pnpm --filter @flibuste/server start`. Réglages : [`.env.example`](.env.example).
+- **Node.js.** `corepack enable && pnpm install`, `pnpm --filter @flibuste/web build`, puis `WEB_DIST=$PWD/apps/web/dist pnpm --filter @flibuste/server start`. Réglages : [`.env.example`](.env.example).
 - **Tests.** `pnpm test` (Vitest, chaque paquet) ; parcours dans un navigateur dans `apps/web/e2e/` (Playwright).
-- **Code.** `packages/engine` règles, `packages/bots` bots, `apps/server` serveur, `apps/web` client, `tools/` arène des bots et dessin des cartes.
+- **Code.** `packages/engine` règles, `packages/bots` bots, `apps/server` serveur, `apps/web` client, `tools/` arène et entraînement des bots, dessin des cartes, encodage des sons.
 
 ## Licences
 
