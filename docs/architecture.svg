@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500" width="640" height="500" font-family="IBM Plex Sans, Segoe UI, Helvetica Neue, Arial, sans-serif" role="img" aria-label="Architecture de Flibuste">
+<title>Architecture de Flibuste</title>
+<defs><marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#5d6b82"/></marker><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1f4fd1"/></marker></defs>
+<rect width="640" height="500" rx="16" fill="#ffffff"/>
+<rect x="20" y="20" width="600" height="110" rx="14" fill="#e6ebf2" stroke="#c9d1dd" stroke-dasharray="4 4"/><text x="34" y="42" fill="#5d6b82" font-size="12" font-weight="600" letter-spacing=".72">TÉLÉPHONES DES JOUEURS</text>
+<rect x="40" y="52" width="220" height="60" rx="10" fill="#fff" stroke="#1f4fd1" stroke-width="2.2"/><text x="52" y="76" fill="#14213d" font-size="13.5" font-weight="600">Appli Flibuste</text><text x="52" y="96" fill="#5d6b82" font-size="12">Svelte · installable</text>
+<rect x="380" y="52" width="220" height="60" rx="10" fill="#fff" stroke="#c9d1dd" stroke-width="1.4"/><text x="392" y="76" fill="#5d6b82" font-size="13.5" font-weight="600">Partie solo</text><text x="392" y="96" fill="#5d6b82" font-size="12">moteur et bots, sans réseau</text>
+<rect x="20" y="200" width="600" height="290" rx="14" fill="#e6ebf2" stroke="#c9d1dd" stroke-dasharray="4 4"/><text x="34" y="478" fill="#5d6b82" font-size="12" font-weight="600" letter-spacing=".72">SERVEUR · NODE.JS, DOCKER</text>
+<rect x="40" y="240" width="220" height="60" rx="10" fill="#fff" stroke="#1f4fd1" stroke-width="2.2"/><text x="52" y="264" fill="#14213d" font-size="13.5" font-weight="600">Salles de jeu</text><text x="52" y="284" fill="#5d6b82" font-size="12">WebSocket · minuteurs, reprise</text>
+<rect x="380" y="240" width="220" height="60" rx="10" fill="#fff" stroke="#1f4fd1" stroke-width="2.2"/><text x="392" y="264" fill="#14213d" font-size="13.5" font-weight="600">Moteur de règles</text><text x="392" y="284" fill="#5d6b82" font-size="12">déterministe · rejouable</text>
+<rect x="40" y="390" width="220" height="60" rx="10" fill="#fff" stroke="#1f4fd1" stroke-width="2.2"/><text x="52" y="414" fill="#14213d" font-size="13.5" font-weight="600">Base SQLite</text><text x="52" y="434" fill="#5d6b82" font-size="12">journal des coups · scores</text>
+<rect x="380" y="390" width="220" height="60" rx="10" fill="#fff" stroke="#1f4fd1" stroke-width="2.2"/><text x="392" y="414" fill="#14213d" font-size="13.5" font-weight="600">Pirates de bois</text><text x="392" y="434" fill="#5d6b82" font-size="12">bots · recherche Monte-Carlo</text>
+<path d="M230 112L230 240" fill="none" stroke="#1f4fd1" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="172.0" y="159" width="144.0" height="18" rx="4" fill="#fff"/><text x="244" y="172" text-anchor="middle" fill="#1f4fd1" font-size="12" font-weight="600">joue (code de salle)</text>
+<circle cx="161.0" cy="168" r="9" fill="#fff" stroke="#1f4fd1" stroke-width="1.5"/><text x="161.0" y="172" text-anchor="middle" fill="#1f4fd1" font-size="11" font-weight="700" font-family="IBM Plex Mono, Consolas, monospace">1</text>
+<path d="M260 270L380 270" fill="none" stroke="#1f4fd1" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="296.9" y="252" width="58.2" height="18" rx="4" fill="#fff"/><text x="326" y="265" text-anchor="middle" fill="#1f4fd1" font-size="12" font-weight="600">vérifie</text>
+<circle cx="285.9" cy="261" r="9" fill="#fff" stroke="#1f4fd1" stroke-width="1.5"/><text x="285.9" y="265" text-anchor="middle" fill="#1f4fd1" font-size="11" font-weight="700" font-family="IBM Plex Mono, Consolas, monospace">2</text>
+<path d="M220 300L220 345L490 345L490 390" fill="none" stroke="#1f4fd1" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="321.1" y="336" width="97.8" height="18" rx="4" fill="#fff"/><text x="370" y="349" text-anchor="middle" fill="#1f4fd1" font-size="12" font-weight="600">tour d'un bot</text>
+<circle cx="310.1" cy="345" r="9" fill="#fff" stroke="#1f4fd1" stroke-width="1.5"/><text x="310.1" y="349" text-anchor="middle" fill="#1f4fd1" font-size="11" font-weight="700" font-family="IBM Plex Mono, Consolas, monospace">3</text>
+<path d="M90 300L90 390" fill="none" stroke="#1f4fd1" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="45.2" y="327" width="117.6" height="18" rx="4" fill="#fff"/><text x="104" y="340" text-anchor="middle" fill="#1f4fd1" font-size="12" font-weight="600">note chaque coup</text>
+<circle cx="34.2" cy="336" r="9" fill="#fff" stroke="#1f4fd1" stroke-width="1.5"/><text x="34.2" y="340" text-anchor="middle" fill="#1f4fd1" font-size="11" font-weight="700" font-family="IBM Plex Mono, Consolas, monospace">4</text>
+<path d="M100 240L100 112" fill="none" stroke="#1f4fd1" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="54.4" y="159" width="91.2" height="18" rx="4" fill="#fff"/><text x="100" y="172" text-anchor="middle" fill="#1f4fd1" font-size="12" font-weight="600">table à jour</text>
+<circle cx="43.4" cy="168" r="9" fill="#fff" stroke="#1f4fd1" stroke-width="1.5"/><text x="43.4" y="172" text-anchor="middle" fill="#1f4fd1" font-size="11" font-weight="700" font-family="IBM Plex Mono, Consolas, monospace">5</text>
+<path d="M560 390L560 300" fill="none" stroke="#5d6b82" stroke-width="1.6" marker-end="url(#m)"/>
+<rect x="534.2" y="337" width="51.6" height="18" rx="4" fill="#fff"/><text x="560" y="350" text-anchor="middle" fill="#5d6b82" font-size="12" font-weight="400">simule</text>
+<path d="M260 82L380 82" fill="none" stroke="#5d6b82" stroke-width="1.6" marker-end="url(#m)"/>
+<rect x="281.0" y="64" width="78.0" height="18" rx="4" fill="#fff"/><text x="320" y="77" text-anchor="middle" fill="#5d6b82" font-size="12" font-weight="400">hors ligne</text>
+</svg>
