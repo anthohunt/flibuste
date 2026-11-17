@@ -6,10 +6,16 @@
 
 <p align="center">
   <img src="docs/menu.jpg" width="300" hspace="6" vspace="6" alt="Écran d'accueil de Flibuste sur téléphone : titre, coffre au trésor illustré, boutons Jouer en solo et Jouer avec des amis">
-  <a href="https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view"><img src="docs/demo.webp" width="300" hspace="6" vspace="6" alt="Une partie solo en cours contre trois bots : cartes jouées pli après pli, puis les scores de la manche (cliquer pour la vidéo complète)"></a>
+  <a href="https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view"><img src="docs/demo.webp" width="300" hspace="6" vspace="6" alt="Une partie solo en cours contre trois bots : cartes jouées pli après pli, puis les scores de la manche (version anglaise, cliquer pour la vidéo complète)"></a>
 </p>
 
-*L'accueil et une vraie partie solo contre trois bots (vitesse ×1,5). [Vidéo complète (1 min 31)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view)*
+<details><summary>Version française</summary>
+
+<p align="center"><a href="https://drive.google.com/file/d/1Xz3lLNJlhyIehrkPnCCmV-RjSjr2nJmz/view"><img src="docs/demo.fr.webp" width="300" alt="Une partie solo en cours contre trois bots : cartes jouées pli après pli, puis les scores de la manche (cliquer pour la vidéo complète)"></a></p>
+
+</details>
+
+*L'accueil et une vraie partie solo contre trois bots (vitesse ×1,5). [Vidéo complète (1 min 31)](https://drive.google.com/file/d/1Xz3lLNJlhyIehrkPnCCmV-RjSjr2nJmz/view)*
 
 ## Utilisation
 
@@ -22,6 +28,12 @@
 ## Architecture
 
 <p align="center"><img src="docs/architecture.svg" width="400" alt="Architecture de Flibuste : l'appli du téléphone envoie les coups aux salles de jeu par WebSocket ; le moteur de règles les vérifie, les bots choisissent leurs coups (règles ou recherche Monte-Carlo), SQLite note chaque coup, et la table repart vers chaque joueur"></p>
+
+<details><summary>Diagramme en français</summary>
+
+<p align="center"><img src="docs/architecture.fr.svg" width="400" alt="Architecture de Flibuste : l'appli du téléphone envoie les coups aux salles de jeu par WebSocket ; le moteur de règles les vérifie, les bots choisissent leurs coups (règles ou recherche Monte-Carlo), SQLite note chaque coup, et la table repart vers chaque joueur"></p>
+
+</details>
 
 ## Lancer
 
