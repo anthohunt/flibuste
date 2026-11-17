@@ -23,6 +23,12 @@
 
 <p align="center"><img src="docs/architecture.svg" width="400" alt="Architecture de Flibuste : l'appli du téléphone envoie les coups aux salles de jeu par WebSocket ; le moteur de règles les vérifie, les bots choisissent leurs coups (règles ou recherche Monte-Carlo), SQLite note chaque coup, et la table repart vers chaque joueur"></p>
 
+<details><summary>Diagramme en français</summary>
+
+<p align="center"><img src="docs/architecture.fr.svg" width="400" alt="Architecture de Flibuste : l'appli du téléphone envoie les coups aux salles de jeu par WebSocket ; le moteur de règles les vérifie, les bots choisissent leurs coups (règles ou recherche Monte-Carlo), SQLite note chaque coup, et la table repart vers chaque joueur"></p>
+
+</details>
+
 ## Lancer
 
 - **État.** Pas en ligne pour le moment ; se lance en local avec Docker ou Node.js 22.

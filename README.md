@@ -21,7 +21,13 @@
 
 ## Architecture
 
-<p align="center"><img src="docs/architecture.en.svg" width="400" alt="Flibuste architecture: the phone app sends moves to the game rooms over WebSocket; the rules engine checks them, bots choose their moves (rules or Monte Carlo search), SQLite logs every move, and the table is sent back to every player"></p>
+<p align="center"><img src="docs/architecture.svg" width="400" alt="Flibuste architecture: the phone app sends moves to the game rooms over WebSocket; the rules engine checks them, bots choose their moves (rules or Monte Carlo search), SQLite logs every move, and the table is sent back to every player"></p>
+
+<details><summary>French version</summary>
+
+<p align="center"><img src="docs/architecture.fr.svg" width="400" alt="Architecture de Flibuste : l'appli du téléphone envoie les coups aux salles de jeu par WebSocket ; le moteur de règles les vérifie, les bots choisissent leurs coups (règles ou recherche Monte-Carlo), SQLite note chaque coup, et la table repart vers chaque joueur"></p>
+
+</details>
 
 ## Run it
 
