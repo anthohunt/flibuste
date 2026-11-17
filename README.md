@@ -4,9 +4,13 @@
 
 **A trick-taking card game with bids, played on a phone.** The game and its rules are in French.
 
-[![Two phones in the same online game: one creates the table, the other joins with the code, then both bid and play (click for the full video)](docs/demo.gif)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view)
+<p align="center">
+  <img src="docs/menu.jpg" width="300" alt="Flibuste home screen on a phone: title, treasure chest illustration, Play solo and Play with friends buttons">
+  &nbsp;
+  <a href="https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view"><img src="docs/demo.webp" width="300" alt="A solo game in progress against three bots: cards played trick after trick, then the round scores (click for the full video)"></a>
+</p>
 
-*Two phones and one bot in the same online game. [Full video (1:52)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view)*
+*Home screen, and a real solo game against three bots: three tricks, then the round scores (1.5× speed). [Full video (1:31)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view). Card art from the hosted version; this repository ships its own simpler card drawings.*
 
 ## Using it
 

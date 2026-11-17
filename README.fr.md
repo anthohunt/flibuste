@@ -4,9 +4,13 @@
 
 **Un jeu de cartes de plis à annonces, sur téléphone.**
 
-[![Deux téléphones dans la même partie en ligne : l'un crée la table, l'autre la rejoint par le code, puis tous deux annoncent et jouent (cliquer pour la vidéo complète)](docs/demo.gif)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view)
+<p align="center">
+  <img src="docs/menu.jpg" width="300" alt="Écran d'accueil de Flibuste sur téléphone : titre, coffre au trésor illustré, boutons Jouer en solo et Jouer avec des amis">
+  &nbsp;
+  <a href="https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view"><img src="docs/demo.webp" width="300" alt="Une partie solo en cours contre trois bots : cartes jouées pli après pli, puis les scores de la manche (cliquer pour la vidéo complète)"></a>
+</p>
 
-*Deux téléphones et un bot dans la même partie en ligne. [Vidéo complète (1 min 52)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view)*
+*L'accueil, et une vraie partie solo contre trois bots : trois plis, puis les scores de la manche (vitesse ×1,5). [Vidéo complète (1 min 31)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view). Illustrations des cartes de la version en ligne ; ce dépôt fournit ses propres dessins, plus simples.*
 
 ## Utilisation
 
