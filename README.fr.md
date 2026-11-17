@@ -5,12 +5,11 @@
 **Un jeu de cartes de plis à annonces, sur téléphone.**
 
 <p align="center">
-  <img src="docs/menu.jpg" width="300" alt="Écran d'accueil de Flibuste sur téléphone : titre, coffre au trésor illustré, boutons Jouer en solo et Jouer avec des amis">
-  &nbsp;
-  <a href="https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view"><img src="docs/demo.webp" width="300" alt="Une partie solo en cours contre trois bots : cartes jouées pli après pli, puis les scores de la manche (cliquer pour la vidéo complète)"></a>
+  <img src="docs/menu.jpg" width="300" hspace="6" vspace="6" alt="Écran d'accueil de Flibuste sur téléphone : titre, coffre au trésor illustré, boutons Jouer en solo et Jouer avec des amis">
+  <a href="https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view"><img src="docs/demo.webp" width="300" hspace="6" vspace="6" alt="Une partie solo en cours contre trois bots : cartes jouées pli après pli, puis les scores de la manche (cliquer pour la vidéo complète)"></a>
 </p>
 
-*L'accueil, et une vraie partie solo contre trois bots : trois plis, puis les scores de la manche (vitesse ×1,5). [Vidéo complète (1 min 31)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view). Illustrations des cartes de la version en ligne ; ce dépôt fournit ses propres dessins, plus simples.*
+*L'accueil et une vraie partie solo contre trois bots (vitesse ×1,5). [Vidéo complète (1 min 31)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view)*
 
 ## Utilisation
 
@@ -22,19 +21,32 @@
 
 ## Architecture
 
-![Architecture de Flibuste : l'appli du téléphone envoie les coups aux salles de jeu par WebSocket ; le moteur de règles les vérifie, les bots choisissent leurs coups (règles ou recherche Monte-Carlo), SQLite note chaque coup, et la table repart vers chaque joueur](docs/architecture.svg)
+<p align="center"><img src="docs/architecture.svg" width="400" alt="Architecture de Flibuste : l'appli du téléphone envoie les coups aux salles de jeu par WebSocket ; le moteur de règles les vérifie, les bots choisissent leurs coups (règles ou recherche Monte-Carlo), SQLite note chaque coup, et la table repart vers chaque joueur"></p>
 
 ## Lancer
 
 - **État.** Pas en ligne pour le moment ; se lance en local avec Docker ou Node.js 22.
-- **Docker.** `docker build -t flibuste . && docker run -p 8787:8787 -v flibuste-data:/data flibuste`, puis http://localhost:8787.
-- **Node.js.** `corepack enable && pnpm install`, `pnpm --filter @flibuste/web build`, puis `WEB_DIST=$PWD/apps/web/dist pnpm --filter @flibuste/server start`. Réglages : [`.env.example`](.env.example).
+- **Docker.** Puis ouvrir http://localhost:8787.
+
+  ```sh
+  docker build -t flibuste .
+  docker run -p 8787:8787 -v flibuste-data:/data flibuste
+  ```
+
+- **Node.js.** Réglages : [`.env.example`](.env.example).
+
+  ```sh
+  corepack enable && pnpm install
+  pnpm --filter @flibuste/web build
+  WEB_DIST=$PWD/apps/web/dist pnpm --filter @flibuste/server start
+  ```
+
 - **Tests.** `pnpm test` (Vitest, chaque paquet) ; parcours dans un navigateur dans `apps/web/e2e/` (Playwright).
 - **Code.** `packages/engine` règles, `packages/bots` bots, `apps/server` serveur, `apps/web` client, `tools/` arène et entraînement des bots, dessin des cartes, encodage des sons.
 
 ## Licences
 
-Code : Apache 2.0 ([`LICENSE`](LICENSE), [`NOTICE`](NOTICE)). Textes : CC BY 4.0 ([`LICENSE-docs`](LICENSE-docs)). Polices, sons, images : [`CREDITS.md`](CREDITS.md). Flibuste est un jeu indépendant, sans lien avec un éditeur de jeu de société.
+Code : Apache 2.0 ([`LICENSE`](LICENSE), [`NOTICE`](NOTICE)). Textes : CC BY 4.0 ([`LICENSE-docs`](LICENSE-docs)). Polices, sons, images : [`CREDITS.md`](CREDITS.md) ; les illustrations des cartes de l'aperçu viennent de l'ancienne version en ligne, ce dépôt fournit ses propres dessins, plus simples. Flibuste est un jeu indépendant, sans lien avec un éditeur de jeu de société.
 
 ---
 
