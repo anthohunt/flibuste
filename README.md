@@ -6,16 +6,16 @@
 
 <p align="center">
   <img src="docs/menu.jpg" width="300" hspace="6" vspace="6" alt="Flibuste home screen on a phone: title, treasure chest illustration, Play solo and Play with friends buttons">
-  <a href="https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view"><img src="docs/demo.webp" width="300" hspace="6" vspace="6" alt="A solo game in progress against three bots: cards played trick after trick, then the round scores (click for the full video)"></a>
+  <a href="https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view"><img src="docs/demo.webp" width="300" hspace="6" vspace="6" alt="A solo game in progress against three bots: cards played trick after trick, then the round scores"></a>
 </p>
 
 <details><summary>French version</summary>
 
-<p align="center"><a href="https://drive.google.com/file/d/1Xz3lLNJlhyIehrkPnCCmV-RjSjr2nJmz/view"><img src="docs/demo.fr.webp" width="300" alt="Une partie solo en cours contre trois bots : cartes jouées pli après pli, puis les scores de la manche (cliquer pour la vidéo complète)"></a></p>
+<p align="center"><a href="https://drive.google.com/file/d/1Xz3lLNJlhyIehrkPnCCmV-RjSjr2nJmz/view"><img src="docs/demo.fr.webp" width="300" alt="Une partie solo en cours contre trois bots : cartes jouées pli après pli, puis les scores de la manche"></a></p>
 
 </details>
 
-*Home screen and a real solo game against three bots (1.5× speed). [Full video (1:31)](https://drive.google.com/file/d/112cOo6Wz_5tBT_SFX-D-ywxkpdukOYuf/view)*
+*Home screen and a real solo game against three bots (1.5× speed).*
 
 ## Using it
 
